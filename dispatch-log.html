@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dispatch Log - FleetForge</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dispatch-form.html">Dispatch Form</a>
+    <a href="dispatch-log.html">Dispatch Log</a>
+  </nav>
+  <header>
+    <h1>Dispatch Log</h1>
+  </header>
+  <main>
+    <table id="logTable">
+      <thead>
+        <tr>
+          <th>Load #</th>
+          <th>Driver</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </main>
+  <script>
+    function renderLog() {
+      const tbody = document.querySelector('#logTable tbody');
+      tbody.innerHTML = '';
+      const dispatches = JSON.parse(localStorage.getItem('dispatches') || '[]');
+      dispatches.forEach(d => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${d.loadNumber}</td>
+          <td>${d.driverName}</td>
+          <td>${d.origin}</td>
+          <td>${d.destination}</td>
+          <td>${new Date(d.date).toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+    renderLog();
+  </script>
+</body>
+</html>
