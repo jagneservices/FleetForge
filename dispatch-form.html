@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dispatch Form - FleetForge</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dispatch-form.html">Dispatch Form</a>
+    <a href="dispatch-log.html">Dispatch Log</a>
+  </nav>
+  <header>
+    <h1>Dispatch Form</h1>
+  </header>
+  <main>
+    <form id="dispatchForm">
+      <label>Load Number
+        <input type="text" id="loadNumber" required />
+      </label>
+      <label>Driver Name
+        <input type="text" id="driverName" required />
+      </label>
+      <label>Origin
+        <input type="text" id="origin" required />
+      </label>
+      <label>Destination
+        <input type="text" id="destination" required />
+      </label>
+      <button type="submit" class="btn">Save Dispatch</button>
+    </form>
+  </main>
+  <script>
+    const form = document.getElementById('dispatchForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const dispatches = JSON.parse(localStorage.getItem('dispatches') || '[]');
+      const entry = {
+        loadNumber: document.getElementById('loadNumber').value,
+        driverName: document.getElementById('driverName').value,
+        origin: document.getElementById('origin').value,
+        destination: document.getElementById('destination').value,
+        date: new Date().toISOString()
+      };
+      dispatches.push(entry);
+      localStorage.setItem('dispatches', JSON.stringify(dispatches));
+      form.reset();
+      window.location.href = 'dispatch-log.html';
+    });
+  </script>
+</body>
+</html>
