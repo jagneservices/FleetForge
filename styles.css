@@ -1,0 +1,97 @@
+body {
+  font-family: 'Georgia', serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a; /* charcoal */
+  color: #cccccc; /* gray text */
+}
+
+header {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #f9a825; /* gold accent */
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+nav {
+  background-color: #333;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+nav a {
+  color: #f9a825;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  background-color: #f9a825;
+  color: #1a1a1a;
+  padding: 1rem 2rem;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 2rem;
+}
+
+.btn:hover {
+  background-color: #dca308;
+}
+
+main {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+form label {
+  display: block;
+  margin-top: 1rem;
+}
+
+form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #555;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+th {
+  background-color: #333;
+}
+
+
