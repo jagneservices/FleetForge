@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dispatch Form - FleetForge</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
 </head>
 <body>
   <nav>
     <a href="index.html">Home</a>
     <a href="dispatch-form.html">Dispatch Form</a>
     <a href="dispatch-log.html">Dispatch Log</a>
+    <a href="#" id="logout">Logout</a>
   </nav>
   <header>
     <h1>Dispatch Form</h1>
@@ -33,21 +37,30 @@
     </form>
   </main>
   <script>
-    const form = document.getElementById('dispatchForm');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const dispatches = JSON.parse(localStorage.getItem('dispatches') || '[]');
-      const entry = {
-        loadNumber: document.getElementById('loadNumber').value,
-        driverName: document.getElementById('driverName').value,
-        origin: document.getElementById('origin').value,
-        destination: document.getElementById('destination').value,
-        date: new Date().toISOString()
-      };
-      dispatches.push(entry);
-      localStorage.setItem('dispatches', JSON.stringify(dispatches));
-      form.reset();
-      window.location.href = 'dispatch-log.html';
+    requireAuth().then(() => {
+      if (!requirePaid()) return;
+      document.getElementById('logout').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await supabase.auth.signOut();
+        localStorage.removeItem('paid');
+        window.location.href = 'index.html';
+      });
+      const form = document.getElementById('dispatchForm');
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const { data: { user } } = await supabase.auth.getUser();
+        const entry = {
+          load_number: document.getElementById('loadNumber').value,
+          driver_name: document.getElementById('driverName').value,
+          origin: document.getElementById('origin').value,
+          destination: document.getElementById('destination').value,
+          date: new Date().toISOString(),
+          user_id: user.id
+        };
+        await supabase.from('dispatches').insert(entry);
+        form.reset();
+        window.location.href = 'dispatch-log.html';
+      });
     });
   </script>
 </body>

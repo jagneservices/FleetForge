@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dispatch Log - FleetForge</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
 </head>
 <body>
   <nav>
     <a href="index.html">Home</a>
     <a href="dispatch-form.html">Dispatch Form</a>
     <a href="dispatch-log.html">Dispatch Log</a>
+    <a href="#" id="logout">Logout</a>
   </nav>
   <header>
     <h1>Dispatch Log</h1>
@@ -31,23 +35,33 @@
     </table>
   </main>
   <script>
-    function renderLog() {
+    requireAuth().then(async user => {
+      if (!requirePaid()) return;
+      document.getElementById('logout').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await supabase.auth.signOut();
+        localStorage.removeItem('paid');
+        window.location.href = 'index.html';
+      });
       const tbody = document.querySelector('#logTable tbody');
       tbody.innerHTML = '';
-      const dispatches = JSON.parse(localStorage.getItem('dispatches') || '[]');
-      dispatches.forEach(d => {
+      const { data } = await supabase
+        .from('dispatches')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('date', { ascending: false });
+      (data || []).forEach(d => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${d.loadNumber}</td>
-          <td>${d.driverName}</td>
+          <td>${d.load_number}</td>
+          <td>${d.driver_name}</td>
           <td>${d.origin}</td>
           <td>${d.destination}</td>
           <td>${new Date(d.date).toLocaleString()}</td>
         `;
         tbody.appendChild(row);
       });
-    }
-    renderLog();
+    });
   </script>
 </body>
 </html>

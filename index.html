@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FleetForge – by JSBS</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="supabase-config.js"></script>
 </head>
 <body>
   <nav>
     <a href="index.html">Home</a>
     <a href="dispatch-form.html">Dispatch Form</a>
     <a href="dispatch-log.html">Dispatch Log</a>
+    <a href="login.html" id="loginLink">Login</a>
   </nav>
   <header>
     <img src="jsbs-logo.jpg" alt="JSBS Logo" class="logo" />
@@ -18,5 +21,19 @@
     <p>Built by Jagne Small Business Services – Powering Dispatch & Fleet Growth</p>
     <a href="dispatch-form.html" class="btn">Get Started</a>
   </header>
+  <script>
+    const link = document.getElementById('loginLink');
+    supabase.auth.getUser().then(({ data }) => {
+      if (data && data.user) {
+        link.textContent = 'Logout';
+        link.addEventListener('click', async (e) => {
+          e.preventDefault();
+          await supabase.auth.signOut();
+          localStorage.removeItem('paid');
+          window.location.reload();
+        });
+      }
+    });
+  </script>
 </body>
 </html>
