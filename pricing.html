@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing - FleetForge</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#" id="logout">Logout</a>
+  </nav>
+  <main>
+    <h1>Subscribe to FleetForge</h1>
+    <p>$9.99/month gives you full access to the dispatch dashboard.</p>
+    <button id="subscribeBtn" class="btn">Subscribe with Stripe</button>
+  </main>
+  <script>
+    requireAuth().then(() => {
+      document.getElementById('logout').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await supabase.auth.signOut();
+        localStorage.removeItem('paid');
+        window.location.href = 'index.html';
+      });
+    });
+    document.getElementById('subscribeBtn').addEventListener('click', () => {
+      // Replace URL with your Stripe payment link
+      const stripeUrl = 'https://buy.stripe.com/test_placeholder';
+      const successUrl = window.location.origin + '/dispatch-form.html';
+      localStorage.setItem('paid', 'true');
+      window.location.href = stripeUrl + '?redirect=' + encodeURIComponent(successUrl);
+    });
+  </script>
+</body>
+</html>

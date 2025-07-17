@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - FleetForge</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Sign Up</h1>
+    <form id="signupForm">
+      <label>Email
+        <input type="email" id="email" required />
+      </label>
+      <label>Password
+        <input type="password" id="password" required />
+      </label>
+      <button type="submit" class="btn">Create Account</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+    <p id="error" class="error"></p>
+  </main>
+  <script>
+    supabase.auth.getUser().then(({ data }) => {
+      if (data && data.user) {
+        window.location.href = 'dispatch-form.html';
+      }
+    });
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const { error } = await supabase.auth.signUp({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+      });
+      if (error) {
+        document.getElementById('error').textContent = error.message;
+      } else {
+        window.location.href = 'pricing.html';
+      }
+    });
+  </script>
+</body>
+</html>
