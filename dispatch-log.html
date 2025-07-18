@@ -4,35 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dispatch Log - FleetForge</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
   <script src="supabase-config.js"></script>
   <script src="auth.js"></script>
 </head>
-<body>
-  <nav>
-    <a href="index.html">Home</a>
+<body class="bg-gray-100 text-gray-800">
+  <nav class="bg-white shadow p-4 flex gap-4 justify-center">
+    <a href="index.html" class="font-semibold">Home</a>
     <a href="dispatch-form.html">Dispatch Form</a>
     <a href="dispatch-log.html">Dispatch Log</a>
     <a href="#" id="logout">Logout</a>
   </nav>
-  <header>
-    <h1>Dispatch Log</h1>
+  <header class="text-center py-6">
+    <h1 class="text-2xl font-bold">Dispatch Log</h1>
   </header>
-  <main>
-    <table id="logTable">
-      <thead>
+  <main class="p-4">
+    <table id="logTable" class="min-w-full divide-y divide-gray-300">
+      <thead class="bg-gray-200">
         <tr>
-          <th>Load #</th>
-          <th>Driver</th>
-          <th>Origin</th>
-          <th>Destination</th>
-          <th>Date</th>
+          <th class="px-2 py-1 text-left">Pickup</th>
+          <th class="px-2 py-1 text-left">Delivery</th>
+          <th class="px-2 py-1 text-left">Rate</th>
+          <th class="px-2 py-1 text-left">Status</th>
+          <th class="px-2 py-1 text-left">Date</th>
         </tr>
       </thead>
       <tbody>
       </tbody>
     </table>
+    <p id="loading" class="text-blue-600 hidden">Loading...</p>
   </main>
   <script>
     requireAuth().then(async user => {
@@ -44,24 +46,30 @@
         window.location.href = 'index.html';
       });
       const tbody = document.querySelector('#logTable tbody');
+      const loading = document.getElementById('loading');
       tbody.innerHTML = '';
-      const { data } = await supabase
-        .from('dispatches')
+      loading.classList.remove('hidden');
+      const { data, error } = await supabase
+        .from('loads')
         .select('*')
         .eq('user_id', user.id)
-        .order('date', { ascending: false });
+        .order('created_at', { ascending: false });
+      loading.classList.add('hidden');
       (data || []).forEach(d => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${d.load_number}</td>
-          <td>${d.driver_name}</td>
-          <td>${d.origin}</td>
-          <td>${d.destination}</td>
-          <td>${new Date(d.date).toLocaleString()}</td>
+          <td class="px-2 py-1">${d.pickup_location}</td>
+          <td class="px-2 py-1">${d.delivery_location}</td>
+          <td class="px-2 py-1">${d.rate}</td>
+          <td class="px-2 py-1">${d.status}</td>
+          <td class="px-2 py-1">${new Date(d.created_at).toLocaleString()}</td>
         `;
         tbody.appendChild(row);
       });
     });
   </script>
+  <footer class="text-center text-sm text-gray-600 p-4">
+    <p>Contact us at <a href="https://jagnesvcs.com" class="underline">jagnesvcs.com</a></p>
+  </footer>
 </body>
 </html>

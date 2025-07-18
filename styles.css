@@ -2,8 +2,8 @@ body {
   font-family: 'Georgia', serif;
   margin: 0;
   padding: 0;
-  background-color: #1a1a1a; /* charcoal */
-  color: #cccccc; /* gray text */
+  background-color: #f7f7f7;
+  color: #333;
 }
 
 header {
@@ -28,13 +28,13 @@ p {
 }
 
 nav {
-  background-color: #333;
+  background-color: #e5e5e5;
   padding: 0.5rem 1rem;
   text-align: center;
 }
 
 nav a {
-  color: #f9a825;
+  color: #1a1a1a;
   margin: 0 1rem;
   text-decoration: none;
   font-weight: bold;
@@ -91,7 +91,7 @@ th, td {
 }
 
 th {
-  background-color: #333;
+  background-color: #e5e5e5;
 }
 
 .error {

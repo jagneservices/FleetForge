@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - FleetForge</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
   <script src="supabase-config.js"></script>
   <script src="auth.js"></script>
 </head>
-<body>
-  <main>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-white shadow p-4">
+    <h1 class="text-2xl font-bold text-center">FleetForge Login</h1>
+  </header>
+  <main class="max-w-md mx-auto p-4">
     <h1>Login</h1>
     <form id="loginForm">
       <label>Email
@@ -21,28 +25,41 @@
       </label>
       <button type="submit" class="btn">Login</button>
     </form>
-    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    <p>Don't have an account? <a href="signup.html" class="underline">Sign up</a></p>
+    <p id="loading" class="text-blue-600 hidden">Loading...</p>
     <p id="error" class="error"></p>
   </main>
   <script>
     supabase.auth.getUser().then(({ data }) => {
-      if (data && data.user) {
-        window.location.href = 'dispatch-form.html';
-      }
-    });
-    const form = document.getElementById('loginForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { error } = await supabase.auth.signIn({
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      });
-      if (error) {
-        document.getElementById('error').textContent = error.message;
+      if (!data || !data.user) {
+        const sess = localStorage.getItem('sb-session');
+        if (sess) {
+          supabase.auth.setSession(JSON.parse(sess).session);
+        }
       } else {
         window.location.href = 'dispatch-form.html';
       }
     });
+    const form = document.getElementById('loginForm');
+    const loading = document.getElementById('loading');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loading.classList.remove('hidden');
+      const { data, error } = await supabase.auth.signIn({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+      });
+      loading.classList.add('hidden');
+      if (error) {
+        document.getElementById('error').textContent = error.message;
+      } else {
+        localStorage.setItem('sb-session', JSON.stringify(data));
+        window.location.href = 'dispatch-form.html';
+      }
+    });
   </script>
+  <footer class="text-center text-sm text-gray-600 p-4">
+    <p>Contact us at <a href="https://jagnesvcs.com" class="underline">jagnesvcs.com</a></p>
+  </footer>
 </body>
 </html>
