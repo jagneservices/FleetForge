@@ -40,8 +40,8 @@
     </form>
   </main>
   <script>
-    requireAuth().then(() => {
-      if (!requirePaid()) return;
+    requireAuth().then(async () => {
+      if (!await requirePaid()) return;
       document.getElementById('logout').addEventListener('click', async (e) => {
         e.preventDefault();
         await supabase.auth.signOut();

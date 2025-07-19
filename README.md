@@ -13,6 +13,11 @@ Create a `loads` table in Supabase with the following columns:
 - `status` (text)
 - `created_at` (timestamp)
 
+Create a `subscriptions` table with:
+
+- `user_id` (uuid, primary key references auth.users)
+- `active` (boolean)
+
 ## Authentication Setup
 
 Copy `supabase-config.example.js` to `supabase-config.js` and add your Supabase project URL and anon key. These values are required for login and database access.

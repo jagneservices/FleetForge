@@ -18,11 +18,26 @@ function requireAuth() {
   });
 }
 
-function requirePaid() {
-  const paid = localStorage.getItem('paid');
-  if (!paid) {
-    window.location.href = 'pricing.html';
+async function requirePaid() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    window.location.href = 'login.html';
     return false;
   }
-  return true;
+
+  const { data, error } = await supabase
+    .from('subscriptions')
+    .select('active')
+    .eq('user_id', user.id)
+    .single();
+
+  const active = !error && data && data.active;
+  if (active) {
+    localStorage.setItem('paid', 'true');
+    return true;
+  }
+
+  localStorage.removeItem('paid');
+  window.location.href = 'pricing.html';
+  return false;
 }
