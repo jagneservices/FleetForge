@@ -32,7 +32,7 @@
     document.getElementById('subscribeBtn').addEventListener('click', () => {
       // Replace URL with your Stripe payment link
       const stripeUrl = 'https://buy.stripe.com/test_placeholder';
-      const successUrl = window.location.origin + '/dispatch-form.html';
+      const successUrl = window.location.origin + '/dashboard.html';
       localStorage.setItem('paid', 'true');
       window.location.href = stripeUrl + '?redirect=' + encodeURIComponent(successUrl);
     });

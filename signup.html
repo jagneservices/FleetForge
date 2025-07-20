@@ -37,7 +37,7 @@
           supabase.auth.setSession(JSON.parse(sess).session);
         }
       } else {
-        window.location.href = 'dispatch-form.html';
+        window.location.href = 'dashboard.html';
       }
     });
     const form = document.getElementById('signupForm');
@@ -54,7 +54,7 @@
         document.getElementById('error').textContent = error.message;
       } else {
         localStorage.setItem('sb-session', JSON.stringify(data));
-        window.location.href = 'pricing.html';
+        window.location.href = 'dashboard.html';
       }
     });
   </script>
