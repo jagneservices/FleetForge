@@ -30,7 +30,6 @@
         link.addEventListener('click', async (e) => {
           e.preventDefault();
           await supabase.auth.signOut();
-          localStorage.removeItem('paid');
           window.location.reload();
         });
       }

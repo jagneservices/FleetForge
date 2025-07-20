@@ -25,7 +25,6 @@
       document.getElementById('logout').addEventListener('click', async (e) => {
         e.preventDefault();
         await supabase.auth.signOut();
-        localStorage.removeItem('paid');
         window.location.href = 'index.html';
       });
     });
@@ -33,7 +32,6 @@
       // Replace URL with your Stripe payment link
       const stripeUrl = 'https://buy.stripe.com/test_placeholder';
       const successUrl = window.location.origin + '/dashboard.html';
-      localStorage.setItem('paid', 'true');
       window.location.href = stripeUrl + '?redirect=' + encodeURIComponent(successUrl);
     });
   </script>
