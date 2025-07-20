@@ -31,13 +31,13 @@
   </main>
   <script>
     supabase.auth.getUser().then(({ data }) => {
-      if (!data || !data.user) {
-        const sess = localStorage.getItem('sb-session');
-        if (sess) {
-          supabase.auth.setSession(JSON.parse(sess).session);
-        }
-      } else {
+      if (data && data.user) {
         window.location.href = 'dispatch-form.html';
+      }
+    });
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN') {
+        window.location.href = 'pricing.html';
       }
     });
     const form = document.getElementById('signupForm');
@@ -45,16 +45,13 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       loading.classList.remove('hidden');
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
       });
       loading.classList.add('hidden');
       if (error) {
         document.getElementById('error').textContent = error.message;
-      } else {
-        localStorage.setItem('sb-session', JSON.stringify(data));
-        window.location.href = 'pricing.html';
       }
     });
   </script>

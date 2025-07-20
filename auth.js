@@ -1,16 +1,6 @@
 function requireAuth() {
   return supabase.auth.getUser().then(({ data }) => {
     if (!data || !data.user) {
-      const sess = localStorage.getItem('sb-session');
-      if (sess) {
-        return supabase.auth.setSession(JSON.parse(sess).session).then(() => {
-          return supabase.auth.getUser().then(({ data }) => {
-            if (data && data.user) return data.user;
-            window.location.href = 'login.html';
-            return Promise.reject();
-          });
-        });
-      }
       window.location.href = 'login.html';
       return Promise.reject();
     }
@@ -33,11 +23,9 @@ async function requirePaid() {
 
   const active = !error && data && data.active;
   if (active) {
-    localStorage.setItem('paid', 'true');
     return true;
   }
 
-  localStorage.removeItem('paid');
   window.location.href = 'pricing.html';
   return false;
 }
