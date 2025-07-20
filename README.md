@@ -61,5 +61,5 @@ Then visit the printed URL (usually `http://localhost:3000`).
 1. Copy and configure `supabase-config.js`.
 2. Create the tables and policies as shown above.
 3. Start the static server and sign up for an account.
-4. Add a load via `dispatch-form.html` and verify it appears in the log for that
+4. Add a load via `dashboard.html` and verify it appears in the log for that
    user only.
