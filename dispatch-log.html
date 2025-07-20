@@ -56,13 +56,18 @@
       loading.classList.add('hidden');
       (data || []).forEach(d => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="px-2 py-1">${d.pickup_location}</td>
-          <td class="px-2 py-1">${d.delivery_location}</td>
-          <td class="px-2 py-1">${d.rate}</td>
-          <td class="px-2 py-1">${d.status}</td>
-          <td class="px-2 py-1">${new Date(d.created_at).toLocaleString()}</td>
-        `;
+        [
+          d.pickup_location,
+          d.delivery_location,
+          d.rate,
+          d.status,
+          new Date(d.created_at).toLocaleString()
+        ].forEach(text => {
+          const cell = document.createElement('td');
+          cell.className = 'px-2 py-1';
+          cell.textContent = text;
+          row.appendChild(cell);
+        });
         tbody.appendChild(row);
       });
     });
