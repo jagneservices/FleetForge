@@ -31,12 +31,7 @@
   </main>
   <script>
     supabase.auth.getUser().then(({ data }) => {
-      if (!data || !data.user) {
-        const sess = localStorage.getItem('sb-session');
-        if (sess) {
-          supabase.auth.setSession(JSON.parse(sess).session);
-        }
-      } else {
+      if (data && data.user) {
         window.location.href = 'dashboard.html';
       }
     });
@@ -53,7 +48,6 @@
       if (error) {
         document.getElementById('error').textContent = error.message;
       } else {
-        localStorage.setItem('sb-session', JSON.stringify(data));
         window.location.href = 'dashboard.html';
       }
     });
