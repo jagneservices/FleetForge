@@ -26,3 +26,17 @@ Copy `supabase-config.example.js` to `supabase-config.js` and add your Supabase 
 cp supabase-config.example.js supabase-config.js
 # edit supabase-config.js with your credentials
 ```
+
+## Webhook Server
+
+A simple Express server handles Stripe webhooks and updates the `subscriptions` table in Supabase. Copy `.env.example` to `.env` and fill in your project keys:
+
+```
+cp .env.example .env
+```
+
+Start the server with:
+
+```
+node server.js
+```

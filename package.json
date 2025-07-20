@@ -1,0 +1,13 @@
+{
+  "name": "fleetforge",
+  "version": "1.0.0",
+  "description": "FleetForge – a lightweight, modular Trucking Management System (TMS) built for dispatchers and fleet owners.",
+  "main": "auth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
