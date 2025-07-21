@@ -55,6 +55,9 @@ create policy "Companies owned by user" on companies
   for select using (auth.uid() = user_id);
 create policy "Insert own company" on companies
   for insert with check (auth.uid() = user_id);
+create policy "Update own company" on companies
+  for update using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
 ```
 
 ## Serving the App
