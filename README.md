@@ -18,6 +18,13 @@ Create a `subscriptions` table with:
 - `user_id` (uuid, primary key references auth.users)
 - `active` (boolean)
 
+Create a `companies` table with:
+
+- `id` (uuid, primary key)
+- `user_id` (uuid, foreign key to auth.users)
+- `name` (text)
+
+
 ## Authentication Setup
 
 Copy `supabase-config.example.js` to `supabase-config.js` and add your Supabase project URL and anon key. These values are required for login and database access.
@@ -43,6 +50,11 @@ create policy "Insert own loads" on loads
 alter table subscriptions enable row level security;
 create policy "Read own subscription" on subscriptions
   for select using (auth.uid() = user_id);
+alter table companies enable row level security;
+create policy "Companies owned by user" on companies
+  for select using (auth.uid() = user_id);
+create policy "Insert own company" on companies
+  for insert with check (auth.uid() = user_id);
 ```
 
 ## Serving the App
