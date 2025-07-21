@@ -6,7 +6,7 @@
   <title>FleetForge – by JSBS</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -23,17 +23,7 @@
     <a href="dashboard.html" class="btn">Get Started</a>
   </header>
   <script>
-    const link = document.getElementById('loginLink');
-    supabase.auth.getUser().then(({ data }) => {
-      if (data && data.user) {
-        link.textContent = 'Logout';
-        link.addEventListener('click', async (e) => {
-          e.preventDefault();
-          await supabase.auth.signOut();
-          window.location.reload();
-        });
-      }
-    });
+    // Navigation state is handled in auth.js via onAuthStateChange
   </script>
   <footer class="text-center text-sm text-gray-600 p-4">
     <p>Phone: 214-995-3144</p>

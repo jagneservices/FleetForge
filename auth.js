@@ -1,5 +1,42 @@
 window.currentCompany = null;
 
+async function updateNav(user) {
+  const link = document.getElementById('loginLink');
+  if (!link) return;
+  if (user) {
+    link.textContent = 'Logout';
+    link.href = '#';
+    link.onclick = async (e) => {
+      e.preventDefault();
+      await supabase.auth.signOut();
+    };
+  } else {
+    link.textContent = 'Login';
+    link.href = 'login.html';
+    link.onclick = null;
+  }
+}
+
+// Initial navigation/company sync
+supabase.auth.getUser().then(async ({ data }) => {
+  const user = data ? data.user : null;
+  if (user) {
+    window.currentCompany = await getCompany(user.id);
+  }
+  updateNav(user);
+});
+
+// Keep state in sync on auth changes
+supabase.auth.onAuthStateChange(async (_event, session) => {
+  const user = session ? session.user : null;
+  if (user) {
+    window.currentCompany = await getCompany(user.id);
+  } else {
+    window.currentCompany = null;
+  }
+  updateNav(user);
+});
+
 function requireAuth() {
   return supabase.auth.getUser().then(({ data }) => {
     const path = window.location.pathname;
