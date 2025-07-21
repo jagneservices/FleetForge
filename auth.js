@@ -70,3 +70,21 @@ async function requireCompany() {
   window.currentCompany = company;
   return company;
 }
+
+supabase.auth.onAuthStateChange(async (_event, session) => {
+  if (session && session.user) {
+    const company = await getCompany(session.user.id);
+    window.currentCompany = company;
+    if (company) {
+      if (/login(\.html)?$/.test(window.location.pathname) ||
+          /signup(\.html)?$/.test(window.location.pathname) ||
+          /register-company(\.html)?$/.test(window.location.pathname)) {
+        window.location.href = 'dashboard.html';
+      }
+    } else {
+      if (!/register-company(\.html)?$/.test(window.location.pathname)) {
+        window.location.href = 'register-company.html';
+      }
+    }
+  }
+});
