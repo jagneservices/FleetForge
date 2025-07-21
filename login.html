@@ -6,7 +6,7 @@
   <title>Login - FleetForge</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="auth.js"></script>
 </head>
@@ -30,8 +30,8 @@
     <p id="error" class="error"></p>
   </main>
   <script>
-    supabase.auth.getUser().then(({ data }) => {
-      if (data && data.user) {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && session.user) {
         window.location.href = 'dashboard.html';
       }
     });
@@ -40,7 +40,7 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       loading.classList.remove('hidden');
-      const { data, error } = await supabase.auth.signIn({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
       });

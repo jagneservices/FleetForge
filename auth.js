@@ -1,9 +1,37 @@
+let currentSession = null;
+let sessionChecked = false;
+
+function redirectIfAuthPage() {
+  const path = window.location.pathname;
+  const isAuthPage = /(login|signup)(\.html)?$/.test(path);
+  if (currentSession && isAuthPage) {
+    window.location.href = 'dashboard.html';
+  }
+}
+
+supabase.auth.getSession().then(({ data: { session } }) => {
+  currentSession = session;
+  sessionChecked = true;
+  redirectIfAuthPage();
+});
+
+supabase.auth.onAuthStateChange((_event, session) => {
+  currentSession = session;
+  sessionChecked = true;
+  redirectIfAuthPage();
+});
+
 function requireAuth() {
-  return supabase.auth.getUser().then(({ data }) => {
+  return Promise.resolve(sessionChecked ? undefined :
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      currentSession = session;
+      sessionChecked = true;
+    })
+  ).then(() => {
     const path = window.location.pathname;
     const isAuthPage = /(login|signup)(\.html)?$/.test(path);
 
-    if (!data || !data.user) {
+    if (!currentSession) {
       if (!isAuthPage) {
         window.location.href = 'login.html';
       }
@@ -15,13 +43,12 @@ function requireAuth() {
       return Promise.reject();
     }
 
-    return data.user;
+    return currentSession.user;
   });
 }
 
 async function requirePaid() {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
+  if (!currentSession) {
     window.location.href = 'login.html';
     return false;
   }
@@ -29,7 +56,7 @@ async function requirePaid() {
   const { data, error } = await supabase
     .from('subscriptions')
     .select('active')
-    .eq('user_id', user.id)
+    .eq('user_id', currentSession.user.id)
     .single();
 
   const active = !error && data && data.active;

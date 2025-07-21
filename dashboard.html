@@ -6,7 +6,7 @@
   <title>Dashboard - FleetForge</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="auth.js"></script>
 </head>
@@ -40,7 +40,7 @@
     </form>
   </main>
   <script>
-    requireAuth().then(async () => {
+    requireAuth().then(async user => {
       if (!await requirePaid()) return;
       document.getElementById('logout').addEventListener('click', async (e) => {
         e.preventDefault();
@@ -53,7 +53,6 @@
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         loading.classList.remove('hidden');
-        const { data: { user } } = await supabase.auth.getUser();
         const entry = {
           user_id: user.id,
           pickup_location: document.getElementById('pickup').value,

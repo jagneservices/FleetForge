@@ -6,8 +6,9 @@
   <title>FleetForge – by JSBS</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
   <nav class="bg-white shadow p-4 flex gap-4 justify-center">
@@ -24,8 +25,8 @@
   </header>
   <script>
     const link = document.getElementById('loginLink');
-    supabase.auth.getUser().then(({ data }) => {
-      if (data && data.user) {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && session.user) {
         link.textContent = 'Logout';
         link.addEventListener('click', async (e) => {
           e.preventDefault();
