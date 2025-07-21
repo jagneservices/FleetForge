@@ -41,7 +41,8 @@
   </main>
   <script>
     requireAuth().then(async () => {
-      if (!await requirePaid()) return;
+      const company = await requireCompany();
+      if (!company || !await requirePaid()) return;
       document.getElementById('logout').addEventListener('click', async (e) => {
         e.preventDefault();
         await supabase.auth.signOut();

@@ -30,9 +30,15 @@
     <p id="error" class="error"></p>
   </main>
   <script>
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(async ({ data }) => {
       if (data && data.user) {
-        window.location.href = 'dashboard.html';
+        const company = await getCompany(data.user.id);
+        if (company) {
+          window.currentCompany = company;
+          window.location.href = 'dashboard.html';
+        } else {
+          window.location.href = 'register-company.html';
+        }
       }
     });
     const form = document.getElementById('signupForm');
@@ -48,7 +54,14 @@
       if (error) {
         document.getElementById('error').textContent = error.message;
       } else {
-        window.location.href = 'dashboard.html';
+        const { data: { user } } = await supabase.auth.getUser();
+        const company = await getCompany(user.id);
+        if (company) {
+          window.currentCompany = company;
+          window.location.href = 'dashboard.html';
+        } else {
+          window.location.href = 'register-company.html';
+        }
       }
     });
   </script>

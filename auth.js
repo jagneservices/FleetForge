@@ -1,3 +1,5 @@
+window.currentCompany = null;
+
 function requireAuth() {
   return supabase.auth.getUser().then(({ data }) => {
     const path = window.location.pathname;
@@ -39,4 +41,32 @@ async function requirePaid() {
 
   window.location.href = 'pricing.html';
   return false;
+}
+
+async function getCompany(userId) {
+  const { data, error } = await supabase
+    .from('companies')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+  return error ? null : data;
+}
+
+async function requireCompany() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    window.location.href = 'login.html';
+    return Promise.reject();
+  }
+
+  const company = await getCompany(user.id);
+  if (!company) {
+    if (!/register-company(\.html)?$/.test(window.location.pathname)) {
+      window.location.href = 'register-company.html';
+      return Promise.reject();
+    }
+    return null;
+  }
+  window.currentCompany = company;
+  return company;
 }
