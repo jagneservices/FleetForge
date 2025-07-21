@@ -42,14 +42,14 @@
       if (!company || !await requirePaid()) return;
       document.getElementById('logout').addEventListener('click', async (e) => {
         e.preventDefault();
-        await supabase.auth.signOut();
+        await client.auth.signOut();
         window.location.href = 'index.html';
       });
       const tbody = document.querySelector('#logTable tbody');
       const loading = document.getElementById('loading');
       tbody.innerHTML = '';
       loading.classList.remove('hidden');
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from('loads')
         .select('*')
         .eq('user_id', user.id)

@@ -8,7 +8,7 @@ async function updateNav(user) {
     link.href = '#';
     link.onclick = async (e) => {
       e.preventDefault();
-      await supabase.auth.signOut();
+      await client.auth.signOut();
     };
   } else {
     link.textContent = 'Login';
@@ -18,7 +18,7 @@ async function updateNav(user) {
 }
 
 // Initial navigation/company sync
-supabase.auth.getUser().then(async ({ data }) => {
+client.auth.getUser().then(async ({ data }) => {
   const user = data ? data.user : null;
   if (user) {
     window.currentCompany = await getCompany(user.id);
@@ -27,7 +27,7 @@ supabase.auth.getUser().then(async ({ data }) => {
 });
 
 // Keep state in sync on auth changes
-supabase.auth.onAuthStateChange(async (_event, session) => {
+client.auth.onAuthStateChange(async (_event, session) => {
   const user = session ? session.user : null;
   if (user) {
     window.currentCompany = await getCompany(user.id);
@@ -38,7 +38,7 @@ supabase.auth.onAuthStateChange(async (_event, session) => {
 });
 
 function requireAuth() {
-  return supabase.auth.getUser().then(({ data }) => {
+  return client.auth.getUser().then(({ data }) => {
     const path = window.location.pathname;
     const isAuthPage = /(login|signup)(\.html)?$/.test(path);
 
@@ -59,13 +59,13 @@ function requireAuth() {
 }
 
 async function requirePaid() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await client.auth.getUser();
   if (!user) {
     window.location.href = 'login.html';
     return false;
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('subscriptions')
     .select('active')
     .eq('user_id', user.id)
@@ -81,7 +81,7 @@ async function requirePaid() {
 }
 
 async function getCompany(userId) {
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from('companies')
     .select('*')
     .eq('user_id', userId)
@@ -90,7 +90,7 @@ async function getCompany(userId) {
 }
 
 async function requireCompany() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await client.auth.getUser();
   if (!user) {
     window.location.href = 'login.html';
     return Promise.reject();
@@ -108,7 +108,7 @@ async function requireCompany() {
   return company;
 }
 
-supabase.auth.onAuthStateChange(async (_event, session) => {
+client.auth.onAuthStateChange(async (_event, session) => {
   if (session && session.user) {
     const company = await getCompany(session.user.id);
     window.currentCompany = company;
