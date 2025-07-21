@@ -70,8 +70,24 @@ Then visit the printed URL (usually `http://localhost:3000`).
 
 ## Testing
 
-1. Copy and configure `supabase-config.js`.
+Automated tests use [Playwright](https://playwright.dev). Configure Supabase
+and install dependencies before running them.
+
+1. Copy `supabase-config.example.js` to `supabase-config.js` and add your
+   Supabase credentials.
 2. Create the tables and policies as shown above.
-3. Start the static server and sign up for an account.
-4. Add a load via `dashboard.html` and verify it appears in the log for that
-   user only.
+3. Install dependencies and Playwright browsers:
+
+   ```bash
+   npm install
+   npx playwright install
+   ```
+
+4. Run the tests:
+
+   ```bash
+   npm test
+   ```
+
+The test suite starts a local server, signs up a user, registers a company, and
+verifies that the user can log out and log back in without re-registering.
