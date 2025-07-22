@@ -33,6 +33,7 @@
     client.auth.getSession().then(async ({ data }) => {
       if (data && data.session) {
         const user = data.session.user;
+        localStorage.setItem('ff_user_id', user.id);
         const company = await getCompanyForUser(user.id);
         if (company) {
           storeCompany(company);
@@ -57,6 +58,7 @@
         document.getElementById('error').textContent = error.message;
       } else {
         const { data: { user } } = await client.auth.getUser();
+        localStorage.setItem('ff_user_id', user.id);
         const company = await getCompanyForUser(user.id);
         if (company) {
           storeCompany(company);

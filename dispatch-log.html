@@ -40,6 +40,7 @@
     <p id="loading" class="text-blue-600 hidden">Loading...</p>
   </main>
   <script>
+    requireLocalAuth();
     requireAuth().then(async ({ user }) => {
       const company = await requireCompany();
       if (!company || !await requirePaid()) return;

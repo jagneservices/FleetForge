@@ -37,6 +37,7 @@
     <p id="error" class="error"></p>
   </main>
   <script>
+    requireLocalAuth();
     requireAuth().then(async ({ user }) => {
       const existing = await getCompanyForUser(user.id);
       const form = document.getElementById('companyForm');
