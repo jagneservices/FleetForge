@@ -14,8 +14,11 @@ test('user signup, company registration, and login', async ({ page }) => {
   await expect(page).toHaveURL(/register-company\.html/);
 
   // Register company
-  await page.fill('#name', 'Test Company');
+  await page.fill('#company_name', 'Test Company');
+  await page.fill('#company_email', 'test-company@example.com');
+  await page.fill('#phone_number', '123-456-7890');
   await page.fill('#address', '123 Testing Way');
+  await page.fill('#company_logo', 'https://example.com/logo.png');
   await page.click('button[type="submit"]');
   await page.waitForURL('**/dashboard.html');
   await expect(page).toHaveURL(/dashboard\.html/);
