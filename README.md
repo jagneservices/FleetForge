@@ -24,6 +24,34 @@ Create a `companies` table with:
 - `user_id` (uuid, foreign key to auth.users)
 - `name` (text)
 
+Create a `users` table with:
+
+- `id` (uuid, primary key references auth.users)
+- `company_id` (uuid, foreign key to companies)
+- `role` (text)
+
+Create a `drivers` table with:
+
+- `id` (uuid, primary key)
+- `user_id` (uuid, foreign key to auth.users)
+- `name` (text)
+- `phone` (text)
+
+Create an `equipment` table with:
+
+- `id` (uuid, primary key)
+- `user_id` (uuid, foreign key to auth.users)
+- `type` (text)
+- `identifier` (text)
+
+Create a `rate_confirmations` table with:
+
+- `id` (uuid, primary key)
+- `user_id` (uuid, foreign key to auth.users)
+- `load_id` (uuid, foreign key to loads)
+- `driver_id` (uuid, foreign key to drivers)
+- `confirmed_at` (timestamp)
+
 
 ## Authentication Setup
 
@@ -58,6 +86,35 @@ create policy "Insert own company" on companies
 create policy "Update own company" on companies
   for update using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+-- Users table policies
+alter table users enable row level security;
+create policy "Read own profile" on users
+  for select using (auth.uid() = id);
+create policy "Manage own profile" on users
+  for all using (auth.uid() = id)
+  with check (auth.uid() = id);
+
+-- Drivers table policies
+alter table drivers enable row level security;
+create policy "Drivers owned by user" on drivers
+  for select using (auth.uid() = user_id);
+create policy "Insert own driver" on drivers
+  for insert with check (auth.uid() = user_id);
+
+-- Equipment table policies
+alter table equipment enable row level security;
+create policy "Equipment owned by user" on equipment
+  for select using (auth.uid() = user_id);
+create policy "Insert own equipment" on equipment
+  for insert with check (auth.uid() = user_id);
+
+-- Rate confirmations table policies
+alter table rate_confirmations enable row level security;
+create policy "Rate confirmations owned by user" on rate_confirmations
+  for select using (auth.uid() = user_id);
+create policy "Insert own rate confirmation" on rate_confirmations
+  for insert with check (auth.uid() = user_id);
 ```
 
 ## Serving the App
