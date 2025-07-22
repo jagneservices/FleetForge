@@ -22,7 +22,11 @@ Create a `companies` table with:
 
 - `id` (uuid, primary key)
 - `user_id` (uuid, foreign key to auth.users)
-- `name` (text)
+- `company_name` (text)
+- `company_email` (text)
+- `phone_number` (text)
+- `address` (text)
+- `company_logo` (text)
 
 Create a `users` table with:
 
