@@ -1,14 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --primary-accent: #FFD700;
+  --secondary-accent: #5C9EAD;
+  --bg-color: #FAFAFA;
+  --header-gradient-start: #0F2027;
+  --header-gradient-mid: #203A43;
+  --header-gradient-end: #2C5364;
+  --card-bg: #FFFFFF;
+  --text-color: #1A1A1A;
+  --muted-text-color: #666666;
+  --border-radius: 12px;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 body {
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f7f7;
-  color: #333;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 header {
   padding: 2rem 1rem;
   text-align: center;
+  background: linear-gradient(to right, var(--header-gradient-start), var(--header-gradient-mid), var(--header-gradient-end));
+  color: var(--card-bg);
+  box-shadow: var(--shadow);
 }
 
 .logo {
@@ -17,81 +36,108 @@ header {
   margin-bottom: 1rem;
 }
 
-h1 {
+h1,
+h2,
+h3 {
   margin: 0;
+  color: var(--primary-accent);
+}
+
+h1 {
   font-size: 2.5rem;
-  color: #f9a825; /* gold accent */
 }
 
 p {
   font-size: 1.2rem;
+  color: var(--muted-text-color);
 }
 
 nav {
-  background-color: #e5e5e5;
+  background-color: var(--secondary-accent) !important;
   padding: 0.5rem 1rem;
   text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
 }
 
 nav a {
-  color: #1a1a1a;
+  color: var(--card-bg);
   margin: 0 1rem;
   text-decoration: none;
   font-weight: bold;
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.5rem;
 }
 
 nav a:hover {
-  text-decoration: underline;
+  background-color: var(--primary-accent);
+  color: var(--text-color);
 }
 
 .btn {
-  background-color: #f9a825;
-  color: #1a1a1a;
-  padding: 1rem 2rem;
+  background-color: var(--secondary-accent);
+  color: var(--card-bg);
+  padding: 0.75rem 1.5rem;
   border: none;
   font-size: 1rem;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   text-decoration: none;
   display: inline-block;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .btn:hover {
-  background-color: #dca308;
+  background-color: #4a8d9e;
 }
 
 main {
   padding: 1rem;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 1rem auto;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
 }
 
 form label {
   display: block;
   margin-top: 1rem;
+  color: var(--text-color);
 }
 
 form input {
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.5rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
-th, td {
-  border: 1px solid #555;
+th,
+td {
+  border: 1px solid #ddd;
   padding: 0.5rem;
   text-align: left;
 }
 
 th {
-  background-color: #e5e5e5;
+  background-color: #F5F5F5;
+  color: var(--text-color);
 }
 
 .error {
