@@ -155,3 +155,22 @@ and install dependencies before running them.
 
 The test suite starts a local server, signs up a user, registers a company, and
 verifies that the user can log out and log back in without re-registering.
+
+<!--
+SQL to enable row level security scoped by company
+
+-- enable RLS on all tables
+alter table companies enable row level security;
+alter table drivers enable row level security;
+alter table equipment enable row level security;
+alter table loads enable row level security;
+alter table rate_confirmations enable row level security;
+alter table users enable row level security;
+
+-- policy: users can insert/select/update/delete rows where company.user_id = auth.uid()
+create policy "manage own company" on companies
+  for all using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- for companies: user can manage only row with user_id = auth.uid()
+-- apply similar policy to drivers, equipment, loads, rate_confirmations and users
+-- ensuring company_id exists in a company owned by the auth user

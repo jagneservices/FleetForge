@@ -37,8 +37,8 @@
     <p id="error" class="error"></p>
   </main>
   <script>
-    requireAuth().then(async (user) => {
-      const existing = await getCompany(user.id);
+    requireAuth().then(async ({ user }) => {
+      const existing = await getCompanyForUser(user.id);
       const form = document.getElementById('companyForm');
       const loading = document.getElementById('loading');
       const errorEl = document.getElementById('error');
@@ -65,14 +65,14 @@
 
         const { data, error } = existing
           ? await client.from('companies').update(payload).eq('user_id', user.id).single()
-          : await client.from('companies').insert(payload).single();
+          : await client.from('companies').upsert(payload, { onConflict: 'user_id' }).select('*').single();
 
         loading.classList.add('hidden');
         if (error) {
           console.error(error);
           errorEl.textContent = error.message;
         } else {
-          window.currentCompany = data;
+          storeCompany(data);
           window.location.href = 'dashboard.html';
         }
       });

@@ -12,12 +12,12 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
   <nav class="bg-white shadow p-4 flex gap-4 justify-center">
-    <a href="index.html" class="font-semibold">Home</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="drivers.html">Drivers</a>
-    <a href="equipment.html">Equipment</a>
-    <a href="rate-confirmations.html">Rate Confirmations</a>
-    <a href="dispatch-log.html">Dispatch Log</a>
+    <a href="#" onclick="navigate('index.html'); return false;" class="font-semibold">Home</a>
+    <a href="#" onclick="navigate('dashboard.html'); return false;">Dashboard</a>
+    <a href="#" onclick="navigate('drivers.html'); return false;">Drivers</a>
+    <a href="#" onclick="navigate('equipment.html'); return false;">Equipment</a>
+    <a href="#" onclick="navigate('rate-confirmations.html'); return false;">Rate Confirmations</a>
+    <a href="#" onclick="navigate('dispatch-log.html'); return false;">Dispatch Log</a>
     <a href="#" id="logout">Logout</a>
   </nav>
   <header class="text-center py-6">
@@ -40,12 +40,12 @@
     </form>
   </main>
   <script>
-    requireAuth().then(async () => {
+    requireAuth().then(async ({ user }) => {
       const company = await requireCompany();
       if (!company || !await requirePaid()) return;
       document.getElementById('logout').addEventListener('click', async (e) => {
         e.preventDefault();
-        await client.auth.signOut();
+        await logout();
         window.location.href = 'index.html';
       });
       const form = document.getElementById('rcForm');
@@ -57,6 +57,7 @@
         const { data: { user } } = await client.auth.getUser();
         const entry = {
           user_id: user.id,
+          company_id: localStorage.getItem('ff_company_id'),
           broker: document.getElementById('broker').value,
           load_number: document.getElementById('loadNumber').value,
           rate: parseFloat(document.getElementById('rate').value),
