@@ -55,6 +55,10 @@
         document.getElementById('error').textContent = error.message;
       } else {
         const { data: { user } } = await client.auth.getUser();
+        const { error: insertError } = await client
+          .from('users')
+          .insert({ user_id: user.id, email: user.email });
+        if (insertError) console.error(insertError);
         const company = await getCompany(user.id);
         if (company) {
           window.currentCompany = company;
