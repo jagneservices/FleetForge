@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - FleetForge</title>
+  <title>Rate Confirmations - FleetForge</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,23 +21,20 @@
     <a href="#" id="logout">Logout</a>
   </nav>
   <header class="text-center py-6">
-    <h1 class="text-2xl font-bold">Dashboard</h1>
+    <h1 class="text-2xl font-bold">Add Rate Confirmation</h1>
   </header>
   <main class="max-w-xl mx-auto p-4">
-    <form id="dispatchForm" class="space-y-4">
-      <label class="block">Pickup Location
-        <input type="text" id="pickup" class="border p-2 w-full" required />
+    <form id="rcForm" class="space-y-4">
+      <label class="block">Broker
+        <input type="text" id="broker" class="border p-2 w-full" required />
       </label>
-      <label class="block">Delivery Location
-        <input type="text" id="delivery" class="border p-2 w-full" required />
+      <label class="block">Load Number
+        <input type="text" id="loadNumber" class="border p-2 w-full" required />
       </label>
       <label class="block">Rate ($)
         <input type="number" step="0.01" id="rate" class="border p-2 w-full" required />
       </label>
-      <label class="block">Status
-        <input type="text" id="status" class="border p-2 w-full" required />
-      </label>
-      <button type="submit" class="btn">Save Load</button>
+      <button type="submit" class="btn">Save Rate Confirmation</button>
       <p id="loading" class="text-blue-600 hidden">Saving...</p>
       <p id="error" class="error"></p>
     </form>
@@ -51,7 +48,7 @@
         await client.auth.signOut();
         window.location.href = 'index.html';
       });
-      const form = document.getElementById('dispatchForm');
+      const form = document.getElementById('rcForm');
       const loading = document.getElementById('loading');
       const errorEl = document.getElementById('error');
       form.addEventListener('submit', async function(e) {
@@ -60,19 +57,17 @@
         const { data: { user } } = await client.auth.getUser();
         const entry = {
           user_id: user.id,
-          pickup_location: document.getElementById('pickup').value,
-          delivery_location: document.getElementById('delivery').value,
+          broker: document.getElementById('broker').value,
+          load_number: document.getElementById('loadNumber').value,
           rate: parseFloat(document.getElementById('rate').value),
-          status: document.getElementById('status').value,
           created_at: new Date().toISOString()
         };
-        const { error } = await client.from('loads').insert(entry);
+        const { error } = await client.from('rate_confirmations').insert(entry);
         loading.classList.add('hidden');
         if (error) {
           errorEl.textContent = error.message;
         } else {
           form.reset();
-          window.location.href = 'dispatch-log.html';
         }
       });
     });

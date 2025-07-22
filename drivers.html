@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dispatch Log - FleetForge</title>
+  <title>Drivers - FleetForge</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,26 +21,26 @@
     <a href="#" id="logout">Logout</a>
   </nav>
   <header class="text-center py-6">
-    <h1 class="text-2xl font-bold">Dispatch Log</h1>
+    <h1 class="text-2xl font-bold">Add Driver</h1>
   </header>
-  <main class="p-4">
-    <table id="logTable" class="min-w-full divide-y divide-gray-300">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="px-2 py-1 text-left">Pickup</th>
-          <th class="px-2 py-1 text-left">Delivery</th>
-          <th class="px-2 py-1 text-left">Rate</th>
-          <th class="px-2 py-1 text-left">Status</th>
-          <th class="px-2 py-1 text-left">Date</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-    <p id="loading" class="text-blue-600 hidden">Loading...</p>
+  <main class="max-w-xl mx-auto p-4">
+    <form id="driverForm" class="space-y-4">
+      <label class="block">Name
+        <input type="text" id="name" class="border p-2 w-full" required />
+      </label>
+      <label class="block">Phone
+        <input type="text" id="phone" class="border p-2 w-full" required />
+      </label>
+      <label class="block">License Number
+        <input type="text" id="license" class="border p-2 w-full" required />
+      </label>
+      <button type="submit" class="btn">Save Driver</button>
+      <p id="loading" class="text-blue-600 hidden">Saving...</p>
+      <p id="error" class="error"></p>
+    </form>
   </main>
   <script>
-    requireAuth().then(async user => {
+    requireAuth().then(async () => {
       const company = await requireCompany();
       if (!company || !await requirePaid()) return;
       document.getElementById('logout').addEventListener('click', async (e) => {
@@ -48,31 +48,27 @@
         await client.auth.signOut();
         window.location.href = 'index.html';
       });
-      const tbody = document.querySelector('#logTable tbody');
+      const form = document.getElementById('driverForm');
       const loading = document.getElementById('loading');
-      tbody.innerHTML = '';
-      loading.classList.remove('hidden');
-      const { data, error } = await client
-        .from('loads')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-      loading.classList.add('hidden');
-      (data || []).forEach(d => {
-        const row = document.createElement('tr');
-        [
-          d.pickup_location,
-          d.delivery_location,
-          d.rate,
-          d.status,
-          new Date(d.created_at).toLocaleString()
-        ].forEach(text => {
-          const cell = document.createElement('td');
-          cell.className = 'px-2 py-1';
-          cell.textContent = text;
-          row.appendChild(cell);
-        });
-        tbody.appendChild(row);
+      const errorEl = document.getElementById('error');
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        loading.classList.remove('hidden');
+        const { data: { user } } = await client.auth.getUser();
+        const entry = {
+          user_id: user.id,
+          name: document.getElementById('name').value,
+          phone: document.getElementById('phone').value,
+          license: document.getElementById('license').value,
+          created_at: new Date().toISOString()
+        };
+        const { error } = await client.from('drivers').insert(entry);
+        loading.classList.add('hidden');
+        if (error) {
+          errorEl.textContent = error.message;
+        } else {
+          form.reset();
+        }
       });
     });
   </script>
