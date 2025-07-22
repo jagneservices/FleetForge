@@ -8,25 +8,26 @@
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
+  <script src="auth.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
   <nav class="bg-white shadow p-4 flex gap-4 justify-center">
-    <a href="index.html" class="font-semibold">Home</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="drivers.html">Drivers</a>
-    <a href="equipment.html">Equipment</a>
-    <a href="rate-confirmations.html">Rate Confirmations</a>
-    <a href="dispatch-log.html">Dispatch Log</a>
+    <a href="#" onclick="navigate('index.html'); return false;" class="font-semibold">Home</a>
+    <a href="#" onclick="navigate('dashboard.html'); return false;">Dashboard</a>
+    <a href="#" onclick="navigate('drivers.html'); return false;">Drivers</a>
+    <a href="#" onclick="navigate('equipment.html'); return false;">Equipment</a>
+    <a href="#" onclick="navigate('rate-confirmations.html'); return false;">Rate Confirmations</a>
+    <a href="#" onclick="navigate('dispatch-log.html'); return false;">Dispatch Log</a>
     <a href="login.html" id="loginLink">Login</a>
   </nav>
   <header class="text-center py-10">
     <img src="jsbs-logo.jpg" alt="JSBS Logo" class="mx-auto mb-4 logo" />
     <h1 class="text-4xl font-bold mb-2">FleetForge</h1>
     <p class="mb-4">Built by Jagne Small Business Services – Powering Dispatch & Fleet Growth</p>
-    <a href="dashboard.html" class="btn">Get Started</a>
+    <a href="#" onclick="navigate('dashboard.html'); return false;" class="btn">Get Started</a>
   </header>
   <script>
-    // Navigation state is handled in auth.js via onAuthStateChange
+    requireAuth();
   </script>
   <footer class="text-center text-sm text-gray-600 p-4">
     <p>Phone: 214-995-3144</p>

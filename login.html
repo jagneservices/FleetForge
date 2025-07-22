@@ -30,11 +30,12 @@
     <p id="error" class="error"></p>
   </main>
   <script>
-    client.auth.getUser().then(async ({ data }) => {
-      if (data && data.user) {
-        const company = await getCompany(data.user.id);
+    client.auth.getSession().then(async ({ data }) => {
+      if (data && data.session) {
+        const user = data.session.user;
+        const company = await getCompanyForUser(user.id);
         if (company) {
-          window.currentCompany = company;
+          storeCompany(company);
           window.location.href = 'dashboard.html';
         } else {
           window.location.href = 'register-company.html';
@@ -56,9 +57,9 @@
         document.getElementById('error').textContent = error.message;
       } else {
         const { data: { user } } = await client.auth.getUser();
-        const company = await getCompany(user.id);
+        const company = await getCompanyForUser(user.id);
         if (company) {
-          window.currentCompany = company;
+          storeCompany(company);
           window.location.href = 'dashboard.html';
         } else {
           window.location.href = 'register-company.html';
