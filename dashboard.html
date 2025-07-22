@@ -69,6 +69,7 @@
         const { error } = await client.from('loads').insert(entry);
         loading.classList.add('hidden');
         if (error) {
+          console.error(error);
           errorEl.textContent = error.message;
         } else {
           form.reset();

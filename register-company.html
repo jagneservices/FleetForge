@@ -51,6 +51,7 @@
           .single();
         loading.classList.add('hidden');
         if (error) {
+          console.error(error);
           errorEl.textContent = error.message;
         } else {
           window.currentCompany = data;

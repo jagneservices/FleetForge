@@ -52,6 +52,7 @@
       });
       loading.classList.add('hidden');
       if (error) {
+        console.error(error);
         document.getElementById('error').textContent = error.message;
       } else {
         const { data: { user } } = await client.auth.getUser();
