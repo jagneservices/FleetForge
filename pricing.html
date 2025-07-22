@@ -26,6 +26,7 @@
     <button id="subscribeBtn" class="btn">Subscribe with Stripe</button>
   </main>
   <script>
+    requireLocalAuth();
     requireAuth().then(async () => {
       const company = await requireCompany();
       if (!company) return;

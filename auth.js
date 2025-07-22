@@ -10,11 +10,24 @@ function storeCompany(company) {
 function clearCompany() {
   localStorage.removeItem('ff_company_id');
   localStorage.removeItem('ff_company_name');
+  localStorage.removeItem('ff_user_id');
 }
 
 async function getCurrentUser() {
   const { data } = await client.auth.getUser();
   return data ? data.user : null;
+}
+
+// Local auth check based on saved user id
+function requireLocalAuth() {
+  const userId = localStorage.getItem('ff_user_id');
+  if (!userId) {
+    window.location.href = 'login.html';
+    return null;
+  }
+  const nav = document.querySelector('nav');
+  if (nav) nav.classList.remove('hidden');
+  return userId;
 }
 
 async function requireAuth() {
