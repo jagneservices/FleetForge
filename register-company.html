@@ -28,9 +28,10 @@
       <label class="block">Address
         <input type="text" id="address" class="border p-2 w-full" required />
       </label>
-      <label class="block">Company Logo URL
-        <input type="url" id="company_logo" class="border p-2 w-full" required />
+      <label class="block">Company Logo
+        <input type="file" id="logo" accept="image/*" class="border p-2 w-full" />
       </label>
+      <p id="logoStatus" class="text-sm"></p>
       <button type="submit" class="btn">Save Company</button>
     </form>
     <p id="loading" class="text-blue-600 hidden">Saving...</p>
@@ -43,25 +44,47 @@
       const form = document.getElementById('companyForm');
       const loading = document.getElementById('loading');
       const errorEl = document.getElementById('error');
+      const logoStatus = document.getElementById('logoStatus');
 
       if (existing) {
         form.company_name.value = existing.company_name || '';
         form.company_email.value = existing.company_email || '';
         form.phone_number.value = existing.phone_number || '';
         form.address.value = existing.address || '';
-        form.company_logo.value = existing.company_logo || '';
       }
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         loading.classList.remove('hidden');
+        errorEl.textContent = '';
+        logoStatus.textContent = '';
+
+        let logoUrl = null;
+        if (form.logo.files.length > 0) {
+          const file = form.logo.files[0];
+          const filePath = `${user.id}/${Date.now()}_${file.name}`;
+          const { error: uploadError } = await client.storage
+            .from('company-logos')
+            .upload(filePath, file);
+          if (uploadError) {
+            loading.classList.add('hidden');
+            errorEl.textContent = uploadError.message;
+            return;
+          }
+          const { data: publicData } = client.storage
+            .from('company-logos')
+            .getPublicUrl(filePath);
+          logoUrl = publicData.publicUrl;
+          logoStatus.textContent = 'Logo uploaded successfully.';
+        }
+
         const payload = {
           user_id: user.id,
           company_name: form.company_name.value,
           company_email: form.company_email.value,
           phone_number: form.phone_number.value,
           address: form.address.value,
-          company_logo: form.company_logo.value
+          logo_url: logoUrl
         };
 
         const { data, error } = existing
