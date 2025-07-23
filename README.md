@@ -77,6 +77,12 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 Set the `SUPABASE_URL` and `SUPABASE_ANON_KEY` environment variables before serving the site or running tests.
 
+## Storage Setup
+
+Create a storage bucket named `company-logos` in the Supabase dashboard. Files uploaded from `register-company.html` are placed under the path `logos/<filename>` inside this bucket.
+
+To serve logos publicly with `getPublicUrl()`, enable public access on the bucket or add a policy that allows reading the uploaded files.
+
 ## Row Level Security
 
 Enable RLS on your tables so each user only sees their own data. Example SQL:
