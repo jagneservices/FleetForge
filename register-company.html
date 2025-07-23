@@ -38,6 +38,16 @@
     <p id="error" class="error"></p>
   </main>
   <script>
+    async function ensureLogoUrlColumn() {
+      const { error } = await client.from('companies').select('logo_url').limit(1);
+      if (error && /logo_url/.test(error.message)) {
+        const { error: rpcError } = await client.rpc('add_logo_url_column');
+        if (rpcError) throw rpcError;
+      } else if (error) {
+        throw error;
+      }
+    }
+
     requireLocalAuth();
     requireAuth().then(async ({ user }) => {
       const existing = await getCompanyForUser(user.id);
@@ -58,6 +68,13 @@
         loading.classList.remove('hidden');
         errorEl.textContent = '';
         logoStatus.textContent = '';
+        try {
+          await ensureLogoUrlColumn();
+        } catch (err) {
+          loading.classList.add('hidden');
+          errorEl.textContent = err.message;
+          return;
+        }
 
         let logoUrl = null;
         if (form.logo.files.length > 0) {
