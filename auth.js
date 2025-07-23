@@ -42,11 +42,19 @@ async function requireAuth() {
 async function getCompanyForUser(userId) {
   const { data, error } = await client
     .from('companies')
-    .select('id, company_name, name')
+    .select('id, company_name, name, company_email, phone_number, address, logo_url')
     .eq('user_id', userId)
     .single();
   if (error) return null;
-  return { id: data.id, name: data.company_name || data.name };
+  return {
+    id: data.id,
+    name: data.company_name || data.name,
+    company_name: data.company_name,
+    company_email: data.company_email,
+    phone_number: data.phone_number,
+    address: data.address,
+    logo_url: data.logo_url
+  };
 }
 
 async function loadCompany() {
