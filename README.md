@@ -28,6 +28,21 @@ Create a `companies` table with:
 - `address` (text)
 - `logo_url` (text)
 
+To ensure this column exists on an existing database, run the SQL script
+`sql/add_logo_url_column.sql` in Supabase. This script defines a function
+`add_logo_url_column()` which adds the nullable `text` column if it is missing.
+Load the script from the Supabase SQL editor or via the CLI:
+
+```bash
+supabase db query < sql/add_logo_url_column.sql
+```
+
+Then call the function once:
+
+```sql
+select add_logo_url_column();
+```
+
 Create a `users` table with:
 
 - `id` (uuid, primary key references auth.users)
