@@ -59,12 +59,23 @@ Create a `rate_confirmations` table with:
 
 ## Authentication Setup
 
-Copy `supabase-config.example.js` to `supabase-config.js` and add your Supabase project URL and anon key. These values are required for login and database access.
+Create a `supabase-config.js` file that loads your Supabase credentials from the environment. You can start from `supabase-config.example.js`:
 
 ```
 cp supabase-config.example.js supabase-config.js
-# edit supabase-config.js with your credentials
 ```
+
+Edit `supabase-config.js` so it contains:
+
+```javascript
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+// Initialize Supabase client (compatible with supabase-js v2)
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+```
+
+Set the `SUPABASE_URL` and `SUPABASE_ANON_KEY` environment variables before serving the site or running tests.
 
 ## Row Level Security
 
@@ -137,8 +148,10 @@ Then visit the printed URL (usually `http://localhost:3000`).
 Automated tests use [Playwright](https://playwright.dev). Configure Supabase
 and install dependencies before running them.
 
-1. Copy `supabase-config.example.js` to `supabase-config.js` and add your
-   Supabase credentials.
+1. Copy `supabase-config.example.js` to `supabase-config.js` and replace the
+   credential values with `process.env.SUPABASE_URL` and
+   `process.env.SUPABASE_ANON_KEY` so the tests can read them from your
+   environment.
 2. Create the tables and policies as shown above.
 3. Install dependencies and Playwright browsers:
 
