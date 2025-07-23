@@ -26,7 +26,7 @@ Create a `companies` table with:
 - `company_email` (text)
 - `phone_number` (text)
 - `address` (text)
-- `company_logo` (text)
+- `logo_url` (text)
 
 Create a `users` table with:
 
