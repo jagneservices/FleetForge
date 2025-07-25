@@ -98,6 +98,64 @@
       }, 2000);
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabase = supabase.createClient(
+      "https://qszdzpuzvdbioqtrigqo.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzemR6cHV6dmRiaW9xdHJpZ3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3ODk0NDYsImV4cCI6MjA2ODM2NTQ0Nn0.N52yVljc8rwQ4k0rNAej1AbfBoH0hickKpsIQjQz9Og"
+    );
+
+    const button = document.querySelector("button");
+    const msgBox = document.createElement("div");
+    msgBox.style.marginTop = "10px";
+    msgBox.style.color = "red";
+    button.parentNode.appendChild(msgBox);
+
+    button.addEventListener("click", async function () {
+      const company_name = document.querySelector('input[placeholder="Company Name"]').value;
+      const company_email = document.querySelector('input[placeholder="Company Email"]').value;
+      const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+      const address = document.querySelector('input[placeholder="Address"]').value;
+      const password = document.querySelector('input[placeholder="Password"]').value;
+
+      if (!company_name || !company_email || !phone || !address || !password) {
+        msgBox.textContent = "All fields are required.";
+        return;
+      }
+
+      // Step 1: Sign up the user
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: company_email,
+        password: password
+      });
+
+      if (signUpError) {
+        msgBox.textContent = "Signup error: " + signUpError.message;
+        return;
+      }
+
+      // Step 2: Insert company info
+      const { error: insertError } = await supabase.from("companies").insert([
+        {
+          company_name,
+          company_email,
+          phone,
+          address
+        }
+      ]);
+
+      if (insertError) {
+        msgBox.textContent = "Database error: " + insertError.message;
+        return;
+      }
+
+      msgBox.style.color = "green";
+      msgBox.textContent = "Account created! Redirecting...";
+      setTimeout(() => {
+        window.location.href = "/login.html";
+      }, 2000);
+    });
+  </script>
   <footer class="text-center text-sm text-gray-600 p-4">
     <p>Phone: 214-995-3144</p>
     <p>Email: <a href="mailto:info@jagnesvcs.com" class="underline">info@jagnesvcs.com</a></p>
