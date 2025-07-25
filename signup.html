@@ -31,21 +31,20 @@
       <label class="block">Password
         <input type="password" id="password" class="border p-2 w-full" required />
       </label>
-      <button type="submit" class="btn w-full">Create Account</button>
-      <p id="success" class="text-green-600"></p>
-      <p id="error" class="error"></p>
+      <button id="create-account" type="submit" class="btn w-full">Create Account</button>
+      <div id="signup-message"></div>
     </form>
     <p class="mt-2">Already have an account? <a href="login.html" class="underline">Login</a></p>
   </main>
   <script>
+    const button = document.getElementById('create-account');
+    const messageEl = document.getElementById('signup-message');
     const form = document.getElementById('signupForm');
-    const successEl = document.getElementById('success');
-    const errorEl = document.getElementById('error');
 
-    form.addEventListener('submit', async (e) => {
+    button.addEventListener('click', async (e) => {
       e.preventDefault();
-      successEl.textContent = '';
-      errorEl.textContent = '';
+      messageEl.textContent = '';
+      messageEl.className = '';
 
       const companyName = document.getElementById('company_name').value;
       const email = document.getElementById('company_email').value;
@@ -53,20 +52,28 @@
       const address = document.getElementById('address').value;
       const password = document.getElementById('password').value;
 
+      if (!companyName || !email || !phone || !address || !password) {
+        messageEl.textContent = 'Please fill in all fields.';
+        messageEl.classList.add('text-red-600');
+        return;
+      }
+
       const { data, error } = await client.auth.signUp({ email, password });
       if (error) {
         console.error(error);
-        errorEl.textContent = error.message;
+        messageEl.textContent = error.message;
+        messageEl.classList.add('text-red-600');
         return;
       }
 
       const user = data.user;
       if (!user) {
-        errorEl.textContent = 'Signup failed.';
+        messageEl.textContent = 'Signup failed.';
+        messageEl.classList.add('text-red-600');
         return;
       }
 
-      const { data: company, error: insertError } = await client
+      const { error: insertError } = await client
         .from('companies')
         .insert({
           user_id: user.id,
@@ -74,19 +81,21 @@
           company_email: email,
           phone_number: phone,
           address
-        })
-        .select('*')
-        .single();
+        });
 
       if (insertError) {
         console.error(insertError);
-        errorEl.textContent = insertError.message;
+        messageEl.textContent = insertError.message;
+        messageEl.classList.add('text-red-600');
         return;
       }
 
-      storeCompany(company);
-      successEl.textContent = 'Account created! Check your email to confirm.';
+      messageEl.textContent = 'Account created!';
+      messageEl.classList.add('text-green-600');
       form.reset();
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 2000);
     });
   </script>
   <footer class="text-center text-sm text-gray-600 p-4">
