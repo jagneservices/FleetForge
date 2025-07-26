@@ -15,144 +15,70 @@
     <h1 class="text-2xl font-bold">Create Your FleetForge Account</h1>
   </header>
   <main class="max-w-md mx-auto p-4">
-    <form id="signupForm" class="space-y-4">
-      <label class="block">Company Name
-        <input type="text" id="company_name" class="border p-2 w-full" required />
-      </label>
-      <label class="block">Company Email
-        <input type="email" id="company_email" class="border p-2 w-full" required />
-      </label>
-      <label class="block">Phone Number
-        <input type="tel" id="phone_number" class="border p-2 w-full" required />
-      </label>
-      <label class="block">Address
-        <input type="text" id="address" class="border p-2 w-full" required />
-      </label>
-      <label class="block">Password
-        <input type="password" id="password" class="border p-2 w-full" required />
-      </label>
-      <button id="create-account" type="submit" class="btn w-full">Create Account</button>
-      <div id="signup-message"></div>
-    </form>
+      <form id="signupForm" class="space-y-4">
+        <label class="block">Company Name
+          <input type="text" id="company_name" placeholder="Company Name" class="border p-2 w-full" required />
+        </label>
+        <label class="block">Company Email
+          <input type="email" id="company_email" placeholder="Company Email" class="border p-2 w-full" required />
+        </label>
+        <label class="block">Phone Number
+          <input type="tel" id="phone_number" placeholder="Phone Number" class="border p-2 w-full" required />
+        </label>
+        <label class="block">Address
+          <input type="text" id="address" placeholder="Address" class="border p-2 w-full" required />
+        </label>
+        <label class="block">Password
+          <input type="password" id="password" placeholder="Password" class="border p-2 w-full" required />
+        </label>
+        <button id="create-account" type="submit" class="btn w-full">Create Account</button>
+      </form>
     <p class="mt-2">Already have an account? <a href="login.html" class="underline">Login</a></p>
   </main>
   <script>
-    const button = document.getElementById('create-account');
-    const messageEl = document.getElementById('signup-message');
+    const SUPABASE_URL = 'https://qszdzpuzvdbioqtrigqo.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzemR6cHV6dmRiaW9xdHJpZ3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3ODk0NDYsImV4cCI6MjA2ODM2NTQ0Nn0.N52yVljc8rwQ4k0rNAej1AbfBoH0hickKpsIQjQz9Og';
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     const form = document.getElementById('signupForm');
+    const button = document.getElementById('create-account');
 
     button.addEventListener('click', async (e) => {
       e.preventDefault();
-      messageEl.textContent = '';
-      messageEl.className = '';
+      const company_name = document.querySelector('input[placeholder="Company Name"]').value.trim();
+      const company_email = document.querySelector('input[placeholder="Company Email"]').value.trim();
+      const phone = document.querySelector('input[placeholder="Phone Number"]').value.trim();
+      const address = document.querySelector('input[placeholder="Address"]').value.trim();
+      const password = document.querySelector('input[placeholder="Password"]').value;
 
-      const name = document.getElementById('company_name').value.trim();
-      const email = document.getElementById('company_email').value.trim();
-      const phone = document.getElementById('phone_number').value.trim();
-      const address = document.getElementById('address').value.trim();
-      const password = document.getElementById('password').value;
-
-      if (!name || !email || !phone || !address || !password) {
-        messageEl.textContent = 'Please fill in all fields.';
-        messageEl.classList.add('text-red-600');
+      if (!company_name || !company_email || !phone || !address || !password) {
+        alert('All fields are required.');
         return;
       }
 
-      const { data, error } = await client.auth.signUp({ email, password });
-      if (error) {
-        console.error(error);
-        messageEl.textContent = error.message;
-        messageEl.classList.add('text-red-600');
-        return;
-      }
+      const { data: signUpData, error: signUpError } = await client.auth.signUp({
+        email: company_email,
+        password
+      });
 
-      const user = data.user;
-      if (!user) {
-        messageEl.textContent = 'Signup failed.';
-        messageEl.classList.add('text-red-600');
+      if (signUpError || !signUpData.user) {
+        alert(signUpError ? signUpError.message : 'Signup failed.');
         return;
       }
 
       const { error: insertError } = await client
         .from('companies')
-        .insert({
-          user_id: user.id,
-          company_name: name,
-          company_email: email,
-          phone_number: phone,
-          address
-        });
+        .insert({ company_name, company_email, phone, address });
 
       if (insertError) {
-        console.error(insertError);
-        messageEl.textContent = insertError.message;
-        messageEl.classList.add('text-red-600');
+        alert(insertError.message);
         return;
       }
 
-      messageEl.textContent = 'Account created!';
-      messageEl.classList.add('text-green-600');
       form.reset();
+      alert('Account created! Redirecting to login...');
       setTimeout(() => {
         window.location.href = 'login.html';
-      }, 2000);
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    const supabase = supabase.createClient(
-      "https://qszdzpuzvdbioqtrigqo.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzemR6cHV6dmRiaW9xdHJpZ3FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3ODk0NDYsImV4cCI6MjA2ODM2NTQ0Nn0.N52yVljc8rwQ4k0rNAej1AbfBoH0hickKpsIQjQz9Og"
-    );
-
-    const button = document.querySelector("button");
-    const msgBox = document.createElement("div");
-    msgBox.style.marginTop = "10px";
-    msgBox.style.color = "red";
-    button.parentNode.appendChild(msgBox);
-
-    button.addEventListener("click", async function () {
-      const company_name = document.querySelector('input[placeholder="Company Name"]').value;
-      const company_email = document.querySelector('input[placeholder="Company Email"]').value;
-      const phone = document.querySelector('input[placeholder="Phone Number"]').value;
-      const address = document.querySelector('input[placeholder="Address"]').value;
-      const password = document.querySelector('input[placeholder="Password"]').value;
-
-      if (!company_name || !company_email || !phone || !address || !password) {
-        msgBox.textContent = "All fields are required.";
-        return;
-      }
-
-      // Step 1: Sign up the user
-      const { error: signUpError } = await supabase.auth.signUp({
-        email: company_email,
-        password: password
-      });
-
-      if (signUpError) {
-        msgBox.textContent = "Signup error: " + signUpError.message;
-        return;
-      }
-
-      // Step 2: Insert company info
-      const { error: insertError } = await supabase.from("companies").insert([
-        {
-          company_name,
-          company_email,
-          phone,
-          address
-        }
-      ]);
-
-      if (insertError) {
-        msgBox.textContent = "Database error: " + insertError.message;
-        return;
-      }
-
-      msgBox.style.color = "green";
-      msgBox.textContent = "Account created! Redirecting...";
-      setTimeout(() => {
-        window.location.href = "/login.html";
       }, 2000);
     });
   </script>
