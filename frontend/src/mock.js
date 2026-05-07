@@ -1,4 +1,4 @@
-// Mock data for TruckingOffice clone
+// Mock data for FleetForge clone
 
 export const navItems = [
   { label: 'Home', href: '#home', hasDropdown: false, isHome: true },
@@ -18,7 +18,7 @@ export const testimonials = [
   },
   {
     id: 2,
-    quote: 'Great app. Keeps track of everything and sends it to TMS. TruckingOffice is the way to go. Customer service is amazing. Simplifies IFTA, IRP and makes tax preparation a breeze. 10 Stars',
+    quote: 'Great app. Keeps track of everything and sends it to TMS. FleetForge is the way to go. Customer service is amazing. Simplifies IFTA, IRP and makes tax preparation a breeze. 10 Stars',
     name: 'Bill Barnes',
     role: 'Owner Operator',
   },
@@ -30,7 +30,7 @@ export const testimonials = [
   },
   {
     id: 4,
-    quote: 'I reviewed several dispatch software programs for our small trucking company. All of the costs were exorbitant in relation to our smaller than normal profit margins. I found TruckingOffice.com on a Google search, signed up for the free trial, within 2 weeks, I signed up for the paid subscription. This app has reduced our office time by half, as we were using excel, quick books, etc for each different function. My husband has all of his costs per truck and driver settlements right at his fingertips. In addition to making my accounting life easier, I have daily reminders of driver license and medical card expiration, truck maintenance notifications, etc. Love this program! Perfect for our small business!',
+    quote: 'I reviewed several dispatch software programs for our small trucking company. All of the costs were exorbitant in relation to our smaller than normal profit margins. I found FleetForge.com on a Google search, signed up for the free trial, within 2 weeks, I signed up for the paid subscription. This app has reduced our office time by half, as we were using excel, quick books, etc for each different function. My husband has all of his costs per truck and driver settlements right at his fingertips. In addition to making my accounting life easier, I have daily reminders of driver license and medical card expiration, truck maintenance notifications, etc. Love this program! Perfect for our small business!',
     name: 'Laura Cameron Hernandez',
     role: 'Trucking Company Owner, Trucking Business',
   },

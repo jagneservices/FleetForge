@@ -21,7 +21,7 @@ const TMSSection = () => {
           <div className="space-y-5">
             {tmsFeatures.map((f) => (
               <div key={f.title} className="text-gray-800">
-                <span className="font-bold" style={{ color: '#1f3a8a' }}>{f.title}</span>{' '}
+                <span className="font-bold" style={{ color: '#d4a23a' }}>{f.title}</span>{' '}
                 <span className="text-gray-700">– {f.desc}</span>
               </div>
             ))}
@@ -35,7 +35,7 @@ const TMSSection = () => {
                 <span className="w-3 h-3 rounded-full bg-yellow-400" />
                 <span className="w-3 h-3 rounded-full bg-green-400" />
               </div>
-              <div className="text-xs text-gray-600">TruckingOffice TMS – Trips List</div>
+              <div className="text-xs text-gray-600">FleetForge TMS – Trips List</div>
             </div>
             <div className="p-3 text-[11px]">
               <div className="flex gap-2 mb-2">

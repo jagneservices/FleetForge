@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import { Home, Lock, ChevronDown, Phone, Menu, X } from 'lucide-react';
 import { navItems } from '../../mock';
+import Logo from './Logo';
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [openDrop, setOpenDrop] = useState(null);
 
   return (
-    <header className="sticky top-0 z-50 w-full text-white shadow-md" style={{ backgroundColor: '#7a7a7a' }}>
+    <header className="sticky top-0 z-50 w-full text-white shadow-md border-b border-white/5" style={{ backgroundColor: '#0a0a0a' }}>
       <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-[72px]">
-          {/* Small red mark */}
-          <a href="/" className="flex items-center" aria-label="Home">
-            <svg viewBox="0 0 60 50" className="h-9 w-10" xmlns="http://www.w3.org/2000/svg">
-              <g fill="#c81f1f">
-                <path d="M5 8 L55 8 L48 18 L12 18 Z" />
-                <path d="M10 22 L52 22 L45 32 L17 32 Z" />
-                <path d="M16 36 L48 36 L42 46 L22 46 Z" />
-              </g>
-            </svg>
+          {/* FleetForge logo */}
+          <a href="/" className="flex items-center" aria-label="FleetForge home">
+            <Logo size="sm" />
           </a>
 
           {/* Desktop nav */}
@@ -32,7 +27,7 @@ const Header = () => {
               >
                 <a
                   href={item.href}
-                  className={`flex items-center gap-1 py-2 transition-colors hover:text-sky-300 ${item.isHome ? 'text-sky-300' : 'text-white'}`}
+                  className={`flex items-center gap-1 py-2 transition-colors hover:text-[#d4a23a] ${item.isHome ? 'text-[#d4a23a]' : 'text-white'}`}
                 >
                   {item.isHome && <Home className="h-4 w-4" />}
                   {item.isHome && <span className="opacity-80">|</span>}
@@ -45,7 +40,7 @@ const Header = () => {
                       <a
                         key={sub}
                         href="#"
-                        className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-[#1f3a8a]"
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-[#d4a23a]"
                       >
                         {sub}
                       </a>
@@ -56,7 +51,7 @@ const Header = () => {
             ))}
             <a
               href="#signin"
-              className="flex items-center gap-1 text-white hover:text-sky-300 transition-colors"
+              className="flex items-center gap-1 text-white hover:text-[#d4a23a] transition-colors"
             >
               <Lock className="h-4 w-4" />
               <span className="opacity-80">|</span>
@@ -81,19 +76,19 @@ const Header = () => {
               <a
                 key={item.label}
                 href={item.href}
-                className="block py-3 text-[15px] border-b border-white/10 hover:text-sky-300"
+                className="block py-3 text-[15px] border-b border-white/10 hover:text-[#d4a23a]"
               >
                 {item.isHome && <Home className="inline h-4 w-4 mr-1" />} {item.label}
               </a>
             ))}
-            <a href="#signin" className="block py-3 text-[15px] hover:text-sky-300">
+            <a href="#signin" className="block py-3 text-[15px] hover:text-[#d4a23a]">
               <Lock className="inline h-4 w-4 mr-1" /> Sign In
             </a>
             <a
-              href="tel:+18002539647"
+              href="tel:+18005553674"
               className="flex items-center gap-2 py-3 text-[15px] text-orange-300"
             >
-              <Phone className="h-4 w-4" /> (800) 253-9647
+              <Phone className="h-4 w-4" /> (800) 555-FORGE
             </a>
           </div>
         )}

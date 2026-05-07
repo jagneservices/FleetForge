@@ -3,12 +3,12 @@ import { Truck, ClipboardCheck, FileCheck, Send, Mail, DollarSign, MapPin, Arrow
 import { processSteps } from '../../mock';
 
 const stepColors = {
-  1: { bg: '#c81f1f', light: '#fde7e7' },
-  2: { bg: '#c81f1f', light: '#fde7e7' },
-  3: { bg: '#c81f1f', light: '#fde7e7' },
+  1: { bg: '#d4a23a', light: '#fde7e7' },
+  2: { bg: '#d4a23a', light: '#fde7e7' },
+  3: { bg: '#d4a23a', light: '#fde7e7' },
 };
 
-const tagColor = (tag) => (tag === 'TMS' ? '#1f3a8a' : '#c81f1f');
+const tagColor = (tag) => (tag === 'TMS' ? '#1a1a1a' : '#d4a23a');
 
 const stepIcons = [Truck, MapPin, FileCheck, Send, Mail, DollarSign, ClipboardCheck];
 
@@ -26,18 +26,18 @@ const ProcessSection = () => {
         {/* Top banner */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 mb-12 mt-10">
           <div className="flex items-end gap-3">
-            <div className="font-extrabold text-[80px] leading-none" style={{ color: '#c81f1f' }}>3</div>
+            <div className="font-extrabold text-[80px] leading-none" style={{ color: '#d4a23a' }}>3</div>
             <div className="flex flex-col leading-tight">
-              <div className="italic font-bold text-2xl" style={{ color: '#c81f1f' }}>Easy</div>
-              <div className="font-extrabold text-3xl" style={{ color: '#1f3a8a' }}>Steps</div>
+              <div className="italic font-bold text-2xl" style={{ color: '#d4a23a' }}>Easy</div>
+              <div className="font-extrabold text-3xl" style={{ color: '#1a1a1a' }}>Steps</div>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <Truck className="h-16 w-16" style={{ color: '#c81f1f' }} strokeWidth={1.5} />
+            <Truck className="h-16 w-16" style={{ color: '#d4a23a' }} strokeWidth={1.5} />
             <div>
-              <div className="font-extrabold text-2xl" style={{ color: '#1f3a8a' }}>
-                <span style={{ color: '#c81f1f' }}>#</span>AfterFreight
+              <div className="font-extrabold text-2xl" style={{ color: '#1a1a1a' }}>
+                <span style={{ color: '#d4a23a' }}>#</span>AfterFreight
               </div>
               <p className="text-gray-700 max-w-md text-sm">
                 Trucking software system designed to manage everything that happens after you book the freight.

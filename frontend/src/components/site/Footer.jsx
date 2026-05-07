@@ -8,11 +8,11 @@ const Footer = () => {
     <footer className="text-gray-300" style={{ backgroundColor: '#1c1c1c' }}>
       <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
-          <div className="bg-white p-3 rounded-md inline-block">
-            <Logo />
+          <div className="inline-block">
+            <Logo size="md" />
           </div>
           <p className="mt-4 text-sm leading-relaxed">
-            TruckingOffice provides easy and affordable trucking management software and ELD
+            FleetForge provides easy and affordable trucking management software and ELD
             solutions for owner operators and fleet builders.
           </p>
           <div className="flex gap-3 mt-5">
@@ -58,15 +58,15 @@ const Footer = () => {
           <h4 className="font-bold text-white mb-4">Contact</h4>
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4" style={{ color: '#ec5a1c' }} />
-              <a href="tel:+18002539647">(800) 253-9647</a>
+              <Phone className="h-4 w-4" style={{ color: '#d4a23a' }} />
+              <a href="tel:+18005553674">(800) 555-FORGE</a>
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4" style={{ color: '#ec5a1c' }} />
-              <a href="mailto:support@truckingoffice.com">support@truckingoffice.com</a>
+              <Mail className="h-4 w-4" style={{ color: '#d4a23a' }} />
+              <a href="mailto:support@fleetforge.com">support@fleetforge.com</a>
             </li>
             <li className="flex items-start gap-2">
-              <MapPin className="h-4 w-4 mt-0.5" style={{ color: '#ec5a1c' }} />
+              <MapPin className="h-4 w-4 mt-0.5" style={{ color: '#d4a23a' }} />
               <span>USA</span>
             </li>
           </ul>
@@ -75,7 +75,7 @@ const Footer = () => {
 
       <div className="border-t border-white/10">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-sm">
-          <div>&copy; {new Date().getFullYear()} TruckingOffice. All rights reserved.</div>
+          <div>&copy; {new Date().getFullYear()} FleetForge. All rights reserved.</div>
           <div className="flex gap-5">
             {footerLinks.legal.map((l) => (
               <a key={l.label} href={l.href} className="hover:text-white">

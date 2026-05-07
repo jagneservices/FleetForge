@@ -8,9 +8,9 @@ const PopularSection = () => {
         <div>
           <h2
             className="font-extrabold italic leading-tight text-[26px] sm:text-[32px] lg:text-[38px]"
-            style={{ color: '#1f6dc9', textShadow: '2px 2px 0 #d6e6f7' }}
+            style={{ color: '#d4a23a', textShadow: '2px 2px 0 rgba(212,162,58,0.15)' }}
           >
-            TruckingOffice is the most popular software for owner operators and fleet builders everywhere because it is so easy, effective, and affordable!
+            FleetForge is the most popular software for owner operators and fleet builders everywhere because it is so easy, effective, and affordable!
           </h2>
         </div>
 
@@ -20,7 +20,7 @@ const PopularSection = () => {
             className="relative w-[230px] h-[300px] rounded-md flex flex-col items-center justify-center shadow-2xl"
             style={{
               background:
-                'repeating-radial-gradient(circle at 50% 30%, #2563eb 0 2px, #1e40af 2px 4px)',
+                'repeating-radial-gradient(circle at 50% 30%, #d4a23a 0 2px, #b8862a 2px 4px)',
             }}
           >
             <div className="absolute inset-2 border-4 border-white/40 rounded-md" />
@@ -28,15 +28,15 @@ const PopularSection = () => {
             <div
               className="font-extrabold text-[110px] leading-none"
               style={{
-                color: '#e5e7eb',
-                textShadow: '3px 3px 0 #1f3a8a, -1px -1px 0 #fff',
+                color: '#1a1a1a',
+                textShadow: '3px 3px 0 #fff, -1px -1px 0 #1a1a1a',
               }}
             >
               #1
             </div>
             <div
               className="mt-2 px-3 py-2 text-center text-white font-extrabold text-[18px] leading-tight"
-              style={{ backgroundColor: '#c81f1f', transform: 'skewY(-3deg)' }}
+              style={{ backgroundColor: '#0a0a0a', transform: 'skewY(-3deg)' }}
             >
               CHOICE FOR <br /> OWNER <br /> OPERATORS
             </div>

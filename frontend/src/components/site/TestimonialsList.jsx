@@ -17,7 +17,7 @@ const TestimonialsList = () => {
               className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
-                <Quote className="h-6 w-6" style={{ color: '#c81f1f' }} />
+                <Quote className="h-6 w-6" style={{ color: '#d4a23a' }} />
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -26,7 +26,7 @@ const TestimonialsList = () => {
               </div>
               <p className="text-gray-700 leading-relaxed">{t.quote}</p>
               <div className="mt-5 pt-4 border-t border-gray-100">
-                <div className="font-bold" style={{ color: '#1f3a8a' }}>{t.name}</div>
+                <div className="font-bold" style={{ color: '#d4a23a' }}>{t.name}</div>
                 <div className="text-sm text-gray-500">{t.role}</div>
               </div>
             </div>

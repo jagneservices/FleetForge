@@ -10,12 +10,12 @@ const GuaranteeSection = () => {
       <div className="max-w-[1280px] mx-auto px-4 lg:px-8 grid lg:grid-cols-3 gap-10 items-center">
         {/* Quality guarantee badge */}
         <div className="flex justify-center">
-          <div className="relative w-[260px] h-[260px] rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-8" style={{ borderColor: '#c81f1f' }}>
-            <div className="absolute inset-3 rounded-full border-2" style={{ borderColor: '#1f3a8a' }} />
-            <ShieldCheck className="h-16 w-16" style={{ color: '#1f3a8a' }} strokeWidth={1.5} />
-            <div className="mt-2 text-center font-extrabold uppercase" style={{ color: '#1f3a8a' }}>
+          <div className="relative w-[260px] h-[260px] rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-8" style={{ borderColor: '#d4a23a' }}>
+            <div className="absolute inset-3 rounded-full border-2" style={{ borderColor: '#1a1a1a' }} />
+            <ShieldCheck className="h-16 w-16" style={{ color: '#1a1a1a' }} strokeWidth={1.5} />
+            <div className="mt-2 text-center font-extrabold uppercase" style={{ color: '#1a1a1a' }}>
               <div className="text-2xl">Quality</div>
-              <div className="text-xl" style={{ color: '#c81f1f' }}>Guaranteed</div>
+              <div className="text-xl" style={{ color: '#d4a23a' }}>Guaranteed</div>
             </div>
           </div>
         </div>
@@ -28,10 +28,10 @@ const GuaranteeSection = () => {
               <div
                 key={g.title}
                 className="bg-white rounded-md p-5 shadow-md border-l-4 hover:shadow-lg transition-shadow"
-                style={{ borderColor: '#c81f1f' }}
+                style={{ borderColor: '#d4a23a' }}
               >
                 <div className="flex items-start gap-3">
-                  <Icon className="h-6 w-6 shrink-0 mt-0.5" style={{ color: '#1f3a8a' }} />
+                  <Icon className="h-6 w-6 shrink-0 mt-0.5" style={{ color: '#1a1a1a' }} />
                   <div>
                     <div className="font-bold text-gray-900">{g.title}</div>
                     <div className="text-sm text-gray-700">– {g.desc}</div>

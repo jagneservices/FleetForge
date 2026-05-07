@@ -34,8 +34,8 @@ const ELDSection = () => {
                     <Battery className="h-3 w-3" />
                   </div>
                 </div>
-                <div className="px-4 py-3 text-white" style={{ backgroundColor: '#1f3a8a' }}>
-                  <div className="text-xs opacity-80">TruckingOffice ELD</div>
+                <div className="px-4 py-3 text-white" style={{ backgroundColor: '#1a1a1a' }}>
+                  <div className="text-xs opacity-80">FleetForge ELD</div>
                   <div className="font-bold">Driver Dashboard</div>
                 </div>
                 <div className="p-4 space-y-3 text-xs flex-1">
@@ -64,12 +64,12 @@ const ELDSection = () => {
           <div className="space-y-5">
             {eldFeatures.map((f) => (
               <div key={f.title} className="text-gray-800">
-                <span className="font-bold" style={{ color: '#1f3a8a' }}>{f.title}</span>{' '}
+                <span className="font-bold" style={{ color: '#d4a23a' }}>{f.title}</span>{' '}
                 <span className="text-gray-700">– {f.desc}</span>
               </div>
             ))}
             <p className="text-gray-700 pt-4">
-              The TruckingOffice ELD is great for owner operators and fleet builders that want an
+              The FleetForge ELD is great for owner operators and fleet builders that want an
               easy affordable way to stay compliant while also streamlining their business like the
               mega fleets do.
             </p>
