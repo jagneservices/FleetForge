@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# FleetForge \u2014 Frontend (React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Run locally
 
-## Available Scripts
+```bash
+yarn install
+cp .env.example .env        # edit REACT_APP_BACKEND_URL if your API is not on :8001
+yarn start
+```
 
-In the project directory, you can run:
+Then open http://localhost:3000.
 
-### `npm start`
+## Build for production
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+yarn build
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Output goes to `build/`. Serve it with any static host (nginx, Cloudflare Pages, Vercel, S3+CloudFront, ...).
 
-### `npm test`
+## Project structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `src/App.js` \u2014 Routes (`/`, `/login`, `/register`, `/app/*` behind `RequireAuth`)
+- `src/lib/`
+  - `api.js` \u2014 axios instance with bearer token interceptor
+  - `auth.jsx` \u2014 React context for auth state + persistence
+  - `RequireAuth.jsx` \u2014 route guard
+  - `format.js` \u2014 currency, status helpers, statuses enum
+- `src/components/`
+  - `ui/` \u2014 shadcn primitives
+  - `site/` \u2014 marketing landing components
+- `src/pages/`
+  - `Home.jsx`, `Login.jsx`, `Register.jsx`
+  - `app/` \u2014 authenticated app shell + module pages (Dashboard, Loads, LoadDetail, LoadNew,
+    Drivers, Documents, Compliance, Financials)
 
-### `npm run build`
+## Conventions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- All API calls go through `src/lib/api.js`. The base URL is
+  `${REACT_APP_BACKEND_URL}/api`. Never hard-code the URL.
+- Auth token is stored under `ff_token` in localStorage; user under `ff_user`.
+- Brand colors: gold `#d4a23a`, charcoal `#0a0a0a`. Use Tailwind utilities; avoid inline
+  hex outside the design tokens above.

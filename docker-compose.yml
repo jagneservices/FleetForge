@@ -1,0 +1,57 @@
+# Local development with Docker Compose
+#
+#   docker compose up --build
+#
+# Brings up MongoDB, the FastAPI backend, and the React dev server together.
+# Edit backend/.env and frontend/.env to override defaults if needed.
+
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: fleetforge-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fleetforge-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: 'mongodb://mongo:27017'
+      DB_NAME: 'fleetforge'
+      CORS_ORIGINS: '*'
+      JWT_SECRET: 'change-me-to-a-long-random-secret'
+    ports:
+      - '8001:8001'
+    volumes:
+      - ./backend:/app
+    command: uvicorn server:app --host 0.0.0.0 --port 8001 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fleetforge-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_BACKEND_URL: 'http://localhost:8001'
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: yarn start
+
+volumes:
+  mongo_data:

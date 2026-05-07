@@ -47,10 +47,10 @@ async def create_load(payload: LoadCreate, user: dict = Depends(get_current_user
 
 @router.get('/{load_id}', response_model=Load)
 async def get_load(load_id: str, user: dict = Depends(get_current_user)):
-    l = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
-    if not l:
+    load = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
+    if not load:
         raise HTTPException(404, 'Load not found')
-    return Load(**l)
+    return Load(**load)
 
 
 @router.patch('/{load_id}', response_model=Load)
@@ -63,8 +63,8 @@ async def update_load(load_id: str, payload: LoadUpdate, user: dict = Depends(ge
         )
         if result.matched_count == 0:
             raise HTTPException(404, 'Load not found')
-    l = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
-    return Load(**l)
+    load = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
+    return Load(**load)
 
 
 @router.patch('/{load_id}/status', response_model=Load)
@@ -75,8 +75,8 @@ async def update_status(load_id: str, payload: StatusUpdate, user: dict = Depend
     )
     if result.matched_count == 0:
         raise HTTPException(404, 'Load not found')
-    l = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
-    return Load(**l)
+    load = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
+    return Load(**load)
 
 
 @router.post('/{load_id}/assign', response_model=Load)
@@ -91,8 +91,8 @@ async def assign_driver(load_id: str, payload: AssignDriver, user: dict = Depend
     if payload.driver_id is None and current.get('status') == 'Dispatched':
         upd['status'] = 'Pending'
     await db.loads.update_one({'id': load_id, 'user_id': user['id']}, {'$set': upd})
-    l = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
-    return Load(**l)
+    load = await db.loads.find_one({'id': load_id, 'user_id': user['id']})
+    return Load(**load)
 
 
 @router.delete('/{load_id}')

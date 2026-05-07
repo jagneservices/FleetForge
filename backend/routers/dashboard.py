@@ -14,13 +14,13 @@ async def stats(user: dict = Depends(get_current_user)):
     loads = await db.loads.find({'user_id': uid}).to_list(2000)
     expenses = await db.expenses.find({'user_id': uid}).to_list(5000)
 
-    total_revenue = sum((l.get('rate') or 0) for l in loads)
+    total_revenue = sum((load.get('rate') or 0) for load in loads)
     total_expenses = sum((e.get('amount') or 0) for e in expenses)
     profit = total_revenue - total_expenses
 
     by_status = {'Pending': 0, 'Dispatched': 0, 'In Transit': 0, 'Delivered': 0, 'Completed': 0}
-    for l in loads:
-        s = l.get('status', 'Pending')
+    for load in loads:
+        s = load.get('status', 'Pending')
         by_status[s] = by_status.get(s, 0) + 1
 
     active_loads = by_status['Pending'] + by_status['Dispatched'] + by_status['In Transit']
@@ -93,15 +93,15 @@ async def seed(user: dict = Depends(get_current_user)):
         {'pickup': 'Houston, TX', 'dropoff': 'New Orleans, LA', 'rate': 1650, 'customer': 'Vanguard Carriers', 'miles': 348, 'driver_id': driver_ids[0], 'status': 'Dispatched'},
     ]
     load_ids = []
-    for idx, l in enumerate(loads):
+    for idx, ld in enumerate(loads):
         lid = str(uuid.uuid4())
         load_ids.append(lid)
         await db.loads.insert_one({
             'id': lid, 'user_id': uid, 'load_number': f'L-{1001 + idx}',
-            'pickup': l['pickup'], 'dropoff': l['dropoff'], 'rate': l['rate'],
-            'customer': l['customer'], 'miles': l['miles'], 'driver_id': l['driver_id'],
+            'pickup': ld['pickup'], 'dropoff': ld['dropoff'], 'rate': ld['rate'],
+            'customer': ld['customer'], 'miles': ld['miles'], 'driver_id': ld['driver_id'],
             'pickup_date': None, 'delivery_date': None, 'notes': None,
-            'status': l['status'], 'created_at': now, 'updated_at': now,
+            'status': ld['status'], 'created_at': now, 'updated_at': now,
         })
 
     # A few expenses
