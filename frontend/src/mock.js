@@ -36,7 +36,7 @@ export const testimonials = [
   },
   {
     id: 5,
-    quote: 'Trucking Office has been amazing! It\u2019s so simple to use. Thanks for sharing your creation.',
+    quote: 'Trucking Office has been amazing! It’s so simple to use. Thanks for sharing your creation.',
     name: 'Shipwise Transport',
     role: 'Fleet Owner',
   },
@@ -49,7 +49,7 @@ export const processSteps = [
     subtitle: 'the Load',
     items: [
       { tag: 'TMS', title: 'Create a planned load (enter load details)', desc: 'Address book updated with all customer, shipper, and consignee info' },
-      { tag: 'TMS', title: 'Dispatch the load by creating a trip', desc: 'All rates calculated, trip info automatically sent to driver\u2019s ELD, all reports updated, per mile truck stats created' },
+      { tag: 'TMS', title: 'Dispatch the load by creating a trip', desc: 'All rates calculated, trip info automatically sent to driver’s ELD, all reports updated, per mile truck stats created' },
       { tag: 'ELD', title: 'The driver receives load info in his ELD app', desc: 'Driver sees the trip info in the upcoming trips section of his ELD mobile app' },
       { tag: 'ELD', title: 'The driver indicates that he is loaded', desc: 'Update status from the ELD mobile app, load status in TMS updated to in transit' },
     ],
@@ -79,8 +79,8 @@ export const processSteps = [
 
 export const tmsFeatures = [
   { title: 'Dispatch', desc: 'enter load details when you book the load. Send the loading instructions to driver, create driver settlements, reports and address book updated automatically' },
-  { title: 'Invoice', desc: 'Create \u2013 Send \u2013 Track Payments' },
-  { title: 'Expenses', desc: 'custom categoried \u2013 assign to truck, driver, and trip' },
+  { title: 'Invoice', desc: 'Create – Send – Track Payments' },
+  { title: 'Expenses', desc: 'custom categoried – assign to truck, driver, and trip' },
   { title: 'Trucker Stats', desc: 'Per mile stats to stay ahead of the game.' },
 ];
 
@@ -94,8 +94,8 @@ export const eldFeatures = [
 export const guarantees = [
   { title: 'Online Software', desc: 'access from any device at any time' },
   { title: 'Security Guaranteed', desc: 'system is backed up and monitored constantly' },
-  { title: 'Privacy Guaranteed', desc: 'personal private account \u2013 your data is never shared with anyone' },
-  { title: 'Satisfaction Guaranteed', desc: 'no contracts \u2013 cancel any time' },
+  { title: 'Privacy Guaranteed', desc: 'personal private account – your data is never shared with anyone' },
+  { title: 'Satisfaction Guaranteed', desc: 'no contracts – cancel any time' },
   { title: 'No Set Up Fees', desc: 'users always tell us how easy it is to learn and to use' },
   { title: 'Free Support', desc: 'we are here for you when you need an extra hand' },
 ];

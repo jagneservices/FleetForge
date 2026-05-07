@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Home, Lock, ChevronDown, Phone, Menu, X } from 'lucide-react';
+import { Home, Lock, ChevronDown, Phone, Menu, X, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { navItems } from '../../mock';
 import Logo from './Logo';
+import { useAuth } from '../../lib/auth';
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [openDrop, setOpenDrop] = useState(null);
+  const { isAuthed } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full text-white shadow-md border-b border-white/5" style={{ backgroundColor: '#0a0a0a' }}>
@@ -49,14 +52,21 @@ const Header = () => {
                 )}
               </div>
             ))}
-            <a
-              href="#signin"
+            <Link
+              to={isAuthed ? '/app' : '/login'}
               className="flex items-center gap-1 text-white hover:text-[#d4a23a] transition-colors"
             >
               <Lock className="h-4 w-4" />
               <span className="opacity-80">|</span>
-              <span>Sign In</span>
-            </a>
+              <span>{isAuthed ? 'Open App' : 'Sign In'}</span>
+            </Link>
+            <Link
+              to={isAuthed ? '/app' : '/register'}
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md font-bold text-sm transition-all hover:-translate-y-0.5"
+              style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
+            >
+              {isAuthed ? 'Launch App' : 'Start Free'} <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </nav>
 
           {/* Mobile toggle */}
@@ -81,9 +91,16 @@ const Header = () => {
                 {item.isHome && <Home className="inline h-4 w-4 mr-1" />} {item.label}
               </a>
             ))}
-            <a href="#signin" className="block py-3 text-[15px] hover:text-[#d4a23a]">
-              <Lock className="inline h-4 w-4 mr-1" /> Sign In
-            </a>
+            <Link to={isAuthed ? '/app' : '/login'} className="block py-3 text-[15px] hover:text-[#d4a23a]">
+              <Lock className="inline h-4 w-4 mr-1" /> {isAuthed ? 'Open App' : 'Sign In'}
+            </Link>
+            <Link
+              to={isAuthed ? '/app' : '/register'}
+              className="inline-flex items-center gap-1.5 mt-2 px-4 py-2 rounded-md font-bold text-sm"
+              style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
+            >
+              {isAuthed ? 'Launch App' : 'Start Free'} <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
             <a
               href="tel:+18005553674"
               className="flex items-center gap-2 py-3 text-[15px] text-orange-300"
