@@ -35,7 +35,10 @@ const LoadDetail = () => {
     }
   };
 
-  useEffect(() => { fetchAll(); /* eslint-disable-next-line */ }, [id]);
+  useEffect(() => {
+    fetchAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   if (loading || !load) return <div className="p-6 text-gray-500">Loading...</div>;
 
