@@ -122,7 +122,7 @@ backend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "Implemented bcrypt password hashing, JWT with 14-day expiry, /api/auth/register, /api/auth/login, /api/auth/me. Token-protected routes via get_current_user dependency."
         - working: true
@@ -137,7 +137,7 @@ backend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "GET/POST/PATCH/DELETE /api/drivers. Driver scoped to user_id. Deletion unassigns driver from any loads."
         - working: true
@@ -152,7 +152,7 @@ backend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "GET (with status/driver filters), POST (auto load_number L-1001+), PATCH for partial updates, PATCH /{id}/status, POST /{id}/assign (auto-progresses Pending↔Dispatched). DELETE cascades to docs and expenses."
         - working: true
@@ -167,7 +167,7 @@ backend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "Multipart upload stored as base64 (max 8MB). Auto-classifies type from filename (Rate Confirmation/BOL/Receipt/Other). Mocked extraction returns pickup/dropoff/rate/customer/miles for rate confirmations. Separate /parse endpoint for preview without saving."
         - working: true
@@ -182,7 +182,7 @@ backend:
     priority: "medium"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "GET (filterable by load_id), POST, DELETE. Categories: Fuel/Tolls/Maintenance/Other. Validates load belongs to user."
         - working: true
@@ -197,7 +197,7 @@ backend:
     priority: "medium"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "Item types: DQ File, Insurance, Vehicle Inspection. Auto-computes Complete/Expiring(<=30d)/Missing(expired) from expires_on date. Manual Missing override supported."
         - working: true
@@ -212,7 +212,7 @@ backend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
           comment: "GET /api/dashboard/stats returns revenue, expenses, profit, load counts by status, drivers/docs counts, compliance alerts. POST /api/dashboard/seed clears and inserts realistic demo data (3 drivers, 5 loads, 5 expenses, 7 compliance items)."
         - working: true
