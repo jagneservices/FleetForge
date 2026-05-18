@@ -60,13 +60,25 @@ const Header = () => {
               <span className="opacity-80">|</span>
               <span>{isAuthed ? 'Open App' : 'Sign In'}</span>
             </Link>
-            <Link
-              to={isAuthed ? '/app' : '/register'}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md font-bold text-sm transition-all hover:-translate-y-0.5"
-              style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
-            >
-              {isAuthed ? 'Launch App' : 'Start Free'} <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+            {isAuthed ? (
+              <Link
+                to="/app"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md font-bold text-sm transition-all hover:-translate-y-0.5"
+                style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
+              >
+                Launch App <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            ) : (
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeysJlRf3c2doyDkiXFVHrLpIfFBQBVNqnh9TCZtpzZqrIylg/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md font-bold text-sm transition-all hover:-translate-y-0.5"
+                style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
+              >
+                Request Custom Setup <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+            )}
           </nav>
 
           {/* Mobile toggle */}
@@ -94,13 +106,25 @@ const Header = () => {
             <Link to={isAuthed ? '/app' : '/login'} className="block py-3 text-[15px] hover:text-[#d4a23a]">
               <Lock className="inline h-4 w-4 mr-1" /> {isAuthed ? 'Open App' : 'Sign In'}
             </Link>
-            <Link
-              to={isAuthed ? '/app' : '/register'}
-              className="inline-flex items-center gap-1.5 mt-2 px-4 py-2 rounded-md font-bold text-sm"
-              style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
-            >
-              {isAuthed ? 'Launch App' : 'Start Free'} <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+            {isAuthed ? (
+              <Link
+                to="/app"
+                className="inline-flex items-center gap-1.5 mt-2 px-4 py-2 rounded-md font-bold text-sm"
+                style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
+              >
+                Launch App <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            ) : (
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeysJlRf3c2doyDkiXFVHrLpIfFBQBVNqnh9TCZtpzZqrIylg/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-2 px-4 py-2 rounded-md font-bold text-sm"
+                style={{ backgroundColor: '#d4a23a', color: '#0a0a0a' }}
+              >
+                Request Custom Setup <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+            )}
             <a
               href="tel:+18005553674"
               className="flex items-center gap-2 py-3 text-[15px] text-orange-300"

@@ -2,7 +2,7 @@ import React from 'react';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import Logo from './Logo';
 
-const HeroButton = ({ href, children, onClick, variant = 'gold' }) => {
+const HeroButton = ({ href, children, onClick, variant = 'gold', target, rel }) => {
   const styles =
     variant === 'gold'
       ? { backgroundColor: '#d4a23a', color: '#0a0a0a' }
@@ -11,6 +11,8 @@ const HeroButton = ({ href, children, onClick, variant = 'gold' }) => {
     <a
       href={href}
       onClick={onClick}
+      target={target}
+      rel={rel}
       className="group inline-flex items-center gap-2 px-7 py-3 rounded-md font-bold shadow-md transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
       style={styles}
     >
@@ -61,7 +63,13 @@ const Hero = () => {
             all from one simple platform.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <HeroButton href="/register">Start Free Trial</HeroButton>
+            <HeroButton
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeysJlRf3c2doyDkiXFVHrLpIfFBQBVNqnh9TCZtpzZqrIylg/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Request Custom Setup
+            </HeroButton>
             <HeroButton href="#how" variant="outline">See How It Works</HeroButton>
           </div>
           <p className="mt-5 text-sm text-gray-500">No credit card required · Cancel anytime</p>

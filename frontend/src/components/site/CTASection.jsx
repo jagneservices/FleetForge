@@ -28,7 +28,13 @@ const CTASection = () => {
           you will see results immediately.
         </p>
         <div className="mt-10 flex justify-center">
-          <HeroButton href="/register">Start Free Trial Today</HeroButton>
+          <HeroButton
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeysJlRf3c2doyDkiXFVHrLpIfFBQBVNqnh9TCZtpzZqrIylg/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Request Custom Setup
+          </HeroButton>
         </div>
         <a
           href="#trial"
